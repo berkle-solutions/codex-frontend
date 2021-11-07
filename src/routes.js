@@ -24,6 +24,7 @@ import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
+import Encomenda from "views/Encomenda";
 
 var routes = [
   {
@@ -81,6 +82,13 @@ var routes = [
     name: "Upgrade to PRO",
     icon: "nc-icon nc-spaceship",
     component: UpgradeToPro,
+    layout: "/admin",
+  },
+  {
+    path: "/encomenda",
+    name: "Encomenda",
+    icon: "nc-icon nc-bag-16",
+    component: Encomenda,
     layout: "/admin",
   },
 ];
