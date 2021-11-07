@@ -26,16 +26,24 @@ import {
     FormGroup,
     Label,
     Input,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardBody,
+    Form
 } from "reactstrap";
 
 function Encomenda() {
     return (
         <>
             <div className="content">
-                <Row>
-                    <Col className="ml-auto mr-auto" md="12">
-                        <form>
-                            <div className="form-row">
+                <Card className="card-user">
+              <CardHeader>
+                <CardTitle tag="h5">Cadastro de Encomenda</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Form>
+                <div className="form-row">
                                 <FormGroup className="col-md-4">
                                     <Label for="cpfCondomino">CPF Condômino</Label>
                                     <Input type="text" id="cpfCondomino" placeholder="Informe o CPF do Condômino" />
@@ -74,9 +82,9 @@ function Encomenda() {
                             <Button color="primary" type="submit">
                                 Enviar
                             </Button>
-                        </form>
-                    </Col>
-                </Row>
+                </Form>
+                </CardBody>
+                </Card>
             </div>
         </>
     );
