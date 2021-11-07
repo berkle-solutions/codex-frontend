@@ -24,6 +24,8 @@ import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
+// adicionar aqui o caminho até a view
+import Exemplo from "views/Exemplo";
 
 var routes = [
   {
@@ -75,12 +77,12 @@ var routes = [
     component: Typography,
     layout: "/admin",
   },
+  // adicionar aqui em baixo em ordem as novas telas
   {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "nc-icon nc-spaceship",
-    component: UpgradeToPro,
+    path: "/exemplo",
+    name: "Exemplo",
+    icon: "nc-icon nc-caps-small",
+    component: Exemplo,
     layout: "/admin",
   },
 ];
