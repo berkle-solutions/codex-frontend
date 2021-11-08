@@ -25,6 +25,8 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 // adicionar aqui o caminho até a view
+import Cadastro from "views/Cadastro.js"
+import Login from "views/Login.js"
 import Exemplo from "views/Exemplo";
 
 var routes = [
@@ -79,6 +81,20 @@ var routes = [
   },
   // adicionar aqui em baixo em ordem as novas telas
   {
+    path: "/cadastro",
+    name: "Cadastro de Pessoas",
+    icon: "nc-icon nc-caps-small",
+    component: Cadastro,
+    layout: "/admin",
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-caps-small",
+    component: Login,
+    layout: "/admin",
+  },
+  {
     path: "/exemplo",
     name: "Exemplo",
     icon: "nc-icon nc-caps-small",
@@ -86,4 +102,4 @@ var routes = [
     layout: "/admin",
   },
 ];
-export default routes;
+export default routes;  
