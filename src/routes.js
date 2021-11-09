@@ -26,6 +26,7 @@ import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 // adicionar aqui o caminho até a view
 import Exemplo from "views/Exemplo";
+import Armario from "views/Armario";
 
 var routes = [
   {
@@ -83,6 +84,13 @@ var routes = [
     name: "Exemplo",
     icon: "nc-icon nc-caps-small",
     component: Exemplo,
+    layout: "/admin",
+  },
+  {
+    path: "/armario",
+    name: "Armario",
+    icon: "nc-icon nc-box",
+    component: Armario,
     layout: "/admin",
   },
 ];
