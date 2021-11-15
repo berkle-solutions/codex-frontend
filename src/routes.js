@@ -83,14 +83,14 @@ var routes = [
   {
     path: "/cadastro",
     name: "Cadastro de Pessoas",
-    icon: "nc-icon nc-caps-small",
+    icon: "nc-icon nc-badge",
     component: Cadastro,
     layout: "/admin",
   },
   {
     path: "/login",
     name: "Login",
-    icon: "nc-icon nc-caps-small",
+    icon: "nc-icon nc-lock-circle-open",
     component: Login,
     layout: "/admin",
   },

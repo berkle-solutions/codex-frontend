@@ -1,4 +1,4 @@
-import React from "react";
+  import React from "react";
 
 import {
   Button,
@@ -27,15 +27,7 @@ export default function Cadastro() {
               <CardBody>
                 <Form>
                   <Row>
-                  <Col className="pr-1" md="11">
-                      <FormGroup>
-                        <label>Perfil</label>
-                        <Input
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-1" md="11">
+                    <Col className="pr-1" md="12">
                       <FormGroup>
                         <label>Nome Completo</label>
                         <Input
@@ -43,7 +35,7 @@ export default function Cadastro() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pr-1" md="3">
+                    <Col className="pr-1" md="4">
                       <FormGroup>
                         <label>CPF</label>
                         <Input
@@ -128,6 +120,30 @@ export default function Cadastro() {
                         <Input 
                         placeholder="(11)99999-9999 "
                         type = "tel"/>
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-1" md="4">
+                      <FormGroup>
+                        <label>Perfil</label>
+                        <Input
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-1" md="4">
+                      <FormGroup>
+                        <label>Usuário</label>
+                        <Input
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-1" md="4">
+                      <FormGroup>
+                        <label>Senha</label>
+                        <Input
+                          type="password"
+                        />
                       </FormGroup>
                     </Col>
                   </Row>
