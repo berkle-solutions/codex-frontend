@@ -6,6 +6,10 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   FormGroup,
   Form,
   Input,
@@ -125,9 +129,22 @@ export default function Cadastro() {
                     <Col className="pr-1" md="4">
                       <FormGroup>
                         <label>Perfil</label>
-                        <Input
+                        {/* <Input
                           type="text"
-                        />
+                        /> */}
+                        <Dropdown toggle={function noRefCheck(){}}>
+                          <DropdownToggle caret>
+                            Dropdown
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            <DropdownItem header>
+                              Header
+                            </DropdownItem>
+                            <DropdownItem>
+                              Action
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </Dropdown>
                       </FormGroup>
                     </Col>
                     <Col className="pr-1" md="4">
@@ -168,6 +185,19 @@ export default function Cadastro() {
                         Cadastrar
                       </Button>
                     </div>
+                    <Dropdown toggle={function noRefCheck(){}}>
+                      <DropdownToggle caret>
+                        Dropdown
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem header>
+                          Header
+                        </DropdownItem>
+                        <DropdownItem>
+                          Action
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
                   </Row>
                 </Form>
               </CardBody>

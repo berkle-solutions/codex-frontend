@@ -27,6 +27,7 @@ import UpgradeToPro from "views/Upgrade.js";
 // adicionar aqui o caminho até a view
 import Cadastro from "views/Cadastro.js"
 import Login from "views/Login.js"
+import Encomenda from "views/Encomenda";
 import Exemplo from "views/Exemplo";
 
 var routes = [
@@ -99,6 +100,13 @@ var routes = [
     name: "Exemplo",
     icon: "nc-icon nc-caps-small",
     component: Exemplo,
+    layout: "/admin",
+  },
+  {
+    path: "/encomenda",
+    name: "Encomenda",
+    icon: "nc-icon nc-bag-16",
+    component: Encomenda,
     layout: "/admin",
   },
 ];
