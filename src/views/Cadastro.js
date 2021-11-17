@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 import {
   Button,
@@ -15,6 +16,37 @@ import {
 
 // alterar nome exemplo para o nome da tela, exemplo: CadastroX
 export default function Cadastro() {
+  const [data, setData] = useState({});
+
+  const handleField = (e) => {
+    setData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const enviarDadosParaAPI = async (e) => {
+    e.preventDefault();
+    try {
+      const newData = { ...data };
+      newData.senha = "1234";
+      newData.data_nascimento = "2012-09-04 06:00:00.000000-08:00";
+      newData.perfil = 6;
+      newData.ativo = 1;
+
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/pessoa/salvar",
+        newData
+      );
+
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  console.log("dados que vou enviar para a api: ", data);
+
   return (
     <>
       <div className="content">
@@ -27,20 +59,16 @@ export default function Cadastro() {
               <CardBody>
                 <Form>
                   <Row>
-                  <Col className="pr-1" md="11">
+                    <Col className="pr-1" md="11">
                       <FormGroup>
                         <label>Perfil</label>
-                        <Input
-                          type="text"
-                        />
+                        <Input type="text" />
                       </FormGroup>
                     </Col>
                     <Col className="pr-1" md="11">
                       <FormGroup>
                         <label>Nome Completo</label>
-                        <Input
-                          type="text"
-                        />
+                        <Input type="text" onChange={handleField} name="nome" />
                       </FormGroup>
                     </Col>
                     <Col className="pr-1" md="3">
@@ -49,6 +77,8 @@ export default function Cadastro() {
                         <Input
                           placeholder="000.000.000-00"
                           type="number"
+                          onChange={handleField}
+                          name="cpf"
                         />
                       </FormGroup>
                     </Col>
@@ -64,10 +94,13 @@ export default function Cadastro() {
                     </Col> */}
                     <Col className="pl-1" md="8">
                       <FormGroup>
-                        <label htmlFor="InputEmail1">
-                          Email
-                        </label>
-                        <Input placeholder="Email" type="email" />
+                        <label htmlFor="InputEmail1">Email</label>
+                        <Input
+                          placeholder="Email"
+                          type="email"
+                          onChange={handleField}
+                          name="email"
+                        />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -100,6 +133,8 @@ export default function Cadastro() {
                         <Input
                           placeholder="Bloco, Torre, Apartamento"
                           type="text"
+                          // onChange={handleField}
+                          name="endereco"
                         />
                       </FormGroup>
                     </Col>
@@ -110,6 +145,8 @@ export default function Cadastro() {
                         <label>Data de Nasc.</label>
                         <Input
                           type="date"
+                          onChange={handleField}
+                          name="data_nascimento"
                         />
                       </FormGroup>
                     </Col>
@@ -118,16 +155,21 @@ export default function Cadastro() {
                         <label>Telefone</label>
                         <Input
                           placeholder="(11)2222-2222"
-                          type= "tel"
+                          type="tel"
+                          name="telefone"
+                          onChange={handleField}
                         />
                       </FormGroup>
                     </Col>
                     <Col className="pl-1" md="4">
                       <FormGroup>
                         <label>Celular</label>
-                        <Input 
-                        placeholder="(11)99999-9999 "
-                        type = "tel"/>
+                        <Input
+                          placeholder="(11)99999-9999 "
+                          type="tel"
+                          onChange={handleField}
+                          name="celular"
+                        />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -138,6 +180,7 @@ export default function Cadastro() {
                         <Input
                           type="textarea"
                           defaultValue=""
+                          onChange={handleField}
                         />
                       </FormGroup>
                     </Col>
@@ -148,6 +191,7 @@ export default function Cadastro() {
                         className="btn-round"
                         color="primary"
                         type="submit"
+                        onClick={enviarDadosParaAPI}
                       >
                         Cadastrar
                       </Button>

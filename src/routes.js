@@ -25,10 +25,11 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 // adicionar aqui o caminho até a view
-import Cadastro from "views/Cadastro.js"
-import Login from "views/Login.js"
+import Cadastro from "views/Cadastro.js";
+import Login from "views/Login.js";
 import Exemplo from "views/Exemplo";
 import Armario from "views/Armario";
+import Encomenda from "views/Encomenda";
 
 var routes = [
   {
@@ -109,5 +110,12 @@ var routes = [
     component: Armario,
     layout: "/admin",
   },
+  {
+    path: "/encomenda",
+    name: "Encomenda",
+    icon: "nc-icon nc-bag-16",
+    component: Encomenda,
+    layout: "/admin",
+  },
 ];
-export default routes;  
+export default routes;
