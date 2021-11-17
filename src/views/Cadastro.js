@@ -9,6 +9,7 @@ import {
   CardTitle,
   FormGroup,
   Form,
+  Label,
   Input,
   Row,
   Col,
@@ -45,8 +46,6 @@ export default function Cadastro() {
     }
   };
 
-  console.log("dados que vou enviar para a api: ", data);
-
   return (
     <>
       <div className="content">
@@ -60,10 +59,23 @@ export default function Cadastro() {
                 <Form>
                   <Row>
                     <Col className="pr-1" md="11">
+                      {/* exemplo de select */}
                       <FormGroup>
-                        <label>Perfil</label>
-                        <Input type="text" />
+                        <Label for="perfil">Perfil</Label>
+                        <Input
+                          id="perfil"
+                          name="perfil"
+                          type="select"
+                          // onChange={handleField}
+                        >
+                          <option></option>
+                          <option value="1">Administrador</option>
+                          <option value="2">Porteiro</option>
+                          <option value="3">Estoquista</option>
+                          <option value="4">Morador</option>
+                        </Input>
                       </FormGroup>
+                      {/* exemplo de select */}
                     </Col>
                     <Col className="pr-1" md="11">
                       <FormGroup>
