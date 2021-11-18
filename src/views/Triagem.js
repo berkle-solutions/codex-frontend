@@ -47,7 +47,6 @@ function Triagem() {
                       <th>Entrada (dia/horario)</th>
                       <th>Descrição</th>
                       <th>Morador</th>
-                      <th>Status</th>
                       <th className="text-right">Detalhe</th>
                     </tr>
                   </thead>
@@ -62,10 +61,9 @@ function Triagem() {
                           fontWeight: "bold",
                         }}
                       >
-                        Retirado
                       </td>
                       <td className="text-right">
-                        <Button color="primary">Ver mais</Button>
+                        <Button color="primary">Detalhes</Button>
                       </td>
                     </tr>
                     <tr>
@@ -78,10 +76,9 @@ function Triagem() {
                           fontWeight: "bold",
                         }}
                       >
-                        Triagem
                       </td>
                       <td className="text-right">
-                        <Button color="primary">Ver mais</Button>
+                        <Button color="primary">Detalhes</Button>
                       </td>
                     </tr>
                     <tr>
@@ -94,10 +91,9 @@ function Triagem() {
                           fontWeight: "bold",
                         }}
                       >
-                        Atraso
                       </td>
                       <td className="text-right">
-                        <Button color="primary">Ver mais</Button>
+                        <Button color="primary">Detalhes</Button>
                       </td>
                     </tr>
                   </tbody>
