@@ -16,13 +16,12 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 // reactstrap components
 import {
     Button,
-    Row,
-    Col,
     FormGroup,
     Label,
     Input,
@@ -33,7 +32,36 @@ import {
     Form
 } from "reactstrap";
 
-function Encomenda() {
+export default function Encomenda() {
+    const [data, setData] = useState({});
+
+    const handleField = (e) => {
+      setData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    };
+  
+    const enviarDadosParaAPI = async (e) => {
+      e.preventDefault();
+      try {
+        const newData = { ...data };
+        newData.senha = "1234";
+        newData.data_nascimento = "2012-09-04 06:00:00.000000-08:00";
+        newData.perfil = 6;
+        newData.ativo = 1;
+  
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/encomenda/salvar",
+          newData
+        );
+  
+        console.log(response);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    
     return (
         <>
             <div className="content">
@@ -45,42 +73,36 @@ function Encomenda() {
                 <Form>
                 <div className="form-row">
                                 <FormGroup className="col-md-4">
-                                    <Label for="cpfCondomino">CPF Condômino</Label>
-                                    <Input type="text" id="cpfCondomino" placeholder="Informe o CPF do Condômino" />
+                                    <Label>Bloco</Label>
+                                    <Input type="text" onChange={handleField} name="bloco" placeholder="Bloco" />
+                                </FormGroup>
+                                <FormGroup className='col-md-4'>
+                                    <Label>Andar</Label>
+                                    <Input type="text" onChange={handleField} name="andar" placeholder="Andar" />
+                                </FormGroup>
+                                <FormGroup className='col-md-4'>
+                                    <Label>Nº Apartamento</Label>
+                                        <Input type="text" onChange={handleField} name="apto" placeholder="Nº Apartamento" />
                                 </FormGroup>
                             </div>
                             <div className="form-row">
                                 <FormGroup className="col-md-3">
-                                    <Label for="nomeCondomino">Nome Condômino</Label>
-                                    <Input type="text" disabled id="nomeCondomino" />
+                                    <Label>Nome Morador Titular</Label>
+                                    <Input type="text" disabled name="nomeMorador" />
                                 </FormGroup>
                                 <FormGroup className="col-md-3">
-                                    <Label for="celularCondomino">Celular Condômino</Label>
-                                    <Input type="text" disabled id="celularCondomino" />
-                                </FormGroup>
-                            </div>
-                            <div className="form-row">
-                                <FormGroup className="col-md-3">
-                                    <Label for="blocoCondomino">Bloco</Label>
-                                    <Input type="text" disabled id="blocoCondomino" />
-                                </FormGroup>
-                                <FormGroup className="col-md-3">
-                                    <Label for="unidadeCondomino">Unidade</Label>
-                                    <Input type="text" disabled id="unidadeCondomino" />
-                                </FormGroup>
-                                <FormGroup className="col-md-3">
-                                    <Label for="andarCondomino">Andar</Label>
-                                    <Input type="text" disabled id="andarCondomino" />
+                                    <Label>Celular Condômino</Label>
+                                    <Input type="text" disabled name="celularMorador" />
                                 </FormGroup>
                             </div>
                             <div className="form-row">
                                 <FormGroup className="col-md-6">
-                                    <Label for="cpfCondomino">Descrição da Encomenda</Label>
-                                    <Input type="textarea" name="text" id="descricaoEncomenda" />
+                                    <Label>Descrição da Encomenda</Label>
+                                    <Input type="textarea" onChange={handleField} name="descricaoEncomenda"/>
                                 </FormGroup>
                             </div>
-                            <Button color="primary" type="submit">
-                                Enviar
+                            <Button color="primary" type="submit" className="btn-round" onClick={enviarDadosParaAPI}>
+                                Cadastrar
                             </Button>
                 </Form>
                 </CardBody>
@@ -90,4 +112,3 @@ function Encomenda() {
     );
 }
 
-export default Encomenda;

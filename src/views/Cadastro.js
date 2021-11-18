@@ -58,32 +58,13 @@ export default function Cadastro() {
               <CardBody>
                 <Form>
                   <Row>
-                    <Col className="pr-1" md="11">
-                      {/* exemplo de select */}
-                      <FormGroup>
-                        <Label for="perfil">Perfil</Label>
-                        <Input
-                          id="perfil"
-                          name="perfil"
-                          type="select"
-                          // onChange={handleField}
-                        >
-                          <option></option>
-                          <option value="1">Administrador</option>
-                          <option value="2">Porteiro</option>
-                          <option value="3">Estoquista</option>
-                          <option value="4">Morador</option>
-                        </Input>
-                      </FormGroup>
-                      {/* exemplo de select */}
-                    </Col>
-                    <Col className="pr-1" md="11">
+                    <Col className="pr-1" md="12">
                       <FormGroup>
                         <label>Nome Completo</label>
                         <Input type="text" onChange={handleField} name="nome" />
                       </FormGroup>
                     </Col>
-                    <Col className="pr-1" md="3">
+                    <Col className="pr-1" md="4">
                       <FormGroup>
                         <label>CPF</label>
                         <Input
@@ -94,16 +75,6 @@ export default function Cadastro() {
                         />
                       </FormGroup>
                     </Col>
-                    {/* <Col className="px-1" md="3">
-                      <FormGroup>
-                        <label>Username</label>
-                        <Input
-                          defaultValue="michael23"
-                          placeholder="Username"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col> */}
                     <Col className="pl-1" md="8">
                       <FormGroup>
                         <label htmlFor="InputEmail1">Email</label>
@@ -117,39 +88,20 @@ export default function Cadastro() {
                     </Col>
                   </Row>
                   <Row>
-                    {/* <Col className="pr-1" md="6">
-                      <FormGroup>
-                        <label>First Name</label>
-                        <Input
-                          defaultValue="Chet"
-                          placeholder="Company"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col> */}
-                    {/* <Col className="pl-1" md="6">
-                      <FormGroup>
-                        <label>Last Name</label>
-                        <Input
-                          defaultValue="Faker"
-                          placeholder="Last Name"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col> */}
                   </Row>
                   <Row>
-                    <Col md="12">
-                      <FormGroup>
-                        <label>Endereço</label>
-                        <Input
-                          placeholder="Bloco, Torre, Apartamento"
-                          type="text"
-                          // onChange={handleField}
-                          name="endereco"
-                        />
-                      </FormGroup>
-                    </Col>
+                  <FormGroup className="col-md-4">
+                                    <Label>Bloco</Label>
+                                    <Input type="text" onChange={handleField} name="bloco" placeholder="Bloco" />
+                                </FormGroup>
+                                <FormGroup className='col-md-4'>
+                                    <Label>Andar</Label>
+                                    <Input type="text" onChange={handleField} name="andar" placeholder="Andar" />
+                                </FormGroup>
+                                <FormGroup className='col-md-4'>
+                                    <Label>Nº Apartamento</Label>
+                                        <Input type="text" onChange={handleField} name="apto" placeholder="Nº Apartamento" />
+                                </FormGroup>
                   </Row>
                   <Row>
                     <Col className="pr-1" md="4">
@@ -186,12 +138,53 @@ export default function Cadastro() {
                     </Col>
                   </Row>
                   <Row>
+                  <Col className="pr-1" md="4">
+                      {/* exemplo de select */}
+                      <FormGroup>
+                        <Label for="perfil">Perfil</Label>
+                        <Input
+                          id="perfil"
+                          name="perfil"
+                          type="select"
+                          // onChange={handleField}
+                        >
+                          <option></option>
+                          <option value="1">Administrador</option>
+                          <option value="2">Porteiro</option>
+                          <option value="3">Estoquista</option>
+                          <option value="4">Morador</option>
+                        </Input>
+                      </FormGroup>
+                      {/* exemplo de select */}
+                    </Col>
+                    <Col className="pr-1" md="4">
+                      <FormGroup>
+                        <label>Usuário</label>
+                        <Input
+                          type="text"
+                          name="usuario"
+                          onChange={handleField}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-1" md="4">
+                      <FormGroup>
+                        <label>Senha</label>
+                        <Input
+                          type="password"
+                          name="senha"
+                          onChange={handleField}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
                     <Col md="12">
                       <FormGroup>
                         <label>Observações</label>
                         <Input
                           type="textarea"
-                          defaultValue=""
+                          name="descricaoCadastro"
                           onChange={handleField}
                         />
                       </FormGroup>
