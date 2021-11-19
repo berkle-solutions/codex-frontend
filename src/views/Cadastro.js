@@ -17,10 +17,14 @@ import {
 
 import { format } from "date-fns";
 
+import { useHistory } from "react-router-dom";
+
 export default function Cadastro() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState({});
   const [ehPorteiro, setEhPorteiro] = useState(false);
+
+  const history = useHistory();
 
   const handleField = (e) => {
     setData((prev) => ({
@@ -47,7 +51,7 @@ export default function Cadastro() {
   const enviarDadosParaAPI = async (e) => {
     e.preventDefault();
     try {
-      const newData = { ...data };
+      let newData = { ...data };
 
       const dataFormatada = new Date(
         format(
@@ -59,9 +63,12 @@ export default function Cadastro() {
       newData.perfil = parseInt(data.perfil);
       newData.data_nascimento = dataFormatada;
 
-      const newDataV2 = { ...newData, localizacao: { ...location } };
+      if (newData.perfil === 4) {
+        newData = { ...newData, localizacao: { ...location } };
+      }
 
-      await axios.post("http://127.0.0.1:8000/api/pessoa/salvar", newDataV2);
+      await axios.post("http://127.0.0.1:8000/api/pessoa/salvar", newData);
+      history.push("tables");
     } catch (e) {
       console.log(e);
     }
