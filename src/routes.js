@@ -30,6 +30,8 @@ import Login from "views/Login.js";
 import Exemplo from "views/Exemplo";
 import Armario from "views/Armario";
 import Encomenda from "views/Encomenda";
+import Triagem from "views/Triagem";
+//import { Table } from "reactstrap";
 
 var routes = [
   {
@@ -69,7 +71,7 @@ var routes = [
   },
   {
     path: "/tables",
-    name: "Table List",
+    name: "Lista Encomendas",
     icon: "nc-icon nc-tile-56",
     component: TableList,
     layout: "/admin",
@@ -115,6 +117,13 @@ var routes = [
     name: "Encomenda",
     icon: "nc-icon nc-bag-16",
     component: Encomenda,
+    layout: "/admin",
+  },
+  {
+    path: "/triagem",
+    name: " Triagem",
+    icon: "nc-icon nc-tile-56",
+    component: Triagem,
     layout: "/admin",
   },
 ];

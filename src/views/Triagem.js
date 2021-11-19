@@ -30,7 +30,7 @@ import {
   Col,
 } from "reactstrap";
 
-function Tables() {
+function Triagem() {
   return (
     <>
       <div className="content">
@@ -38,16 +38,15 @@ function Tables() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Listagem de Encomendas</CardTitle>
+                <CardTitle tag="h4">View de Encomendas em Triagem</CardTitle>
               </CardHeader>
               <CardBody>
                 <Table responsive>
                   <thead className="text-primary">
                     <tr>
-                      <th>Unidade</th>
+                      <th>Entrada (dia/horario)</th>
                       <th>Descrição</th>
                       <th>Morador</th>
-                      <th>Status</th>
                       <th className="text-right">Detalhe</th>
                     </tr>
                   </thead>
@@ -62,10 +61,9 @@ function Tables() {
                           fontWeight: "bold",
                         }}
                       >
-                        Retirado
                       </td>
                       <td className="text-right">
-                        <Button color="primary">Ver mais</Button>
+                        <Button color="primary">Detalhes</Button>
                       </td>
                     </tr>
                     <tr>
@@ -78,10 +76,9 @@ function Tables() {
                           fontWeight: "bold",
                         }}
                       >
-                        Triagem
                       </td>
                       <td className="text-right">
-                        <Button color="primary">Ver mais</Button>
+                        <Button color="primary">Detalhes</Button>
                       </td>
                     </tr>
                     <tr>
@@ -94,10 +91,9 @@ function Tables() {
                           fontWeight: "bold",
                         }}
                       >
-                        Atraso
                       </td>
                       <td className="text-right">
-                        <Button color="primary">Ver mais</Button>
+                        <Button color="primary">Detalhes</Button>
                       </td>
                     </tr>
                   </tbody>
@@ -111,4 +107,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default Triagem;
