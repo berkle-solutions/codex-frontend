@@ -19,10 +19,18 @@ import { format } from "date-fns";
 
 export default function Cadastro() {
   const [data, setData] = useState({});
+  const [location, setLocation] = useState({});
   const [ehPorteiro, setEhPorteiro] = useState(false);
 
   const handleField = (e) => {
     setData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleRegistrarLocalizacao = (e) => {
+    setLocation((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -51,7 +59,9 @@ export default function Cadastro() {
       newData.perfil = parseInt(data.perfil);
       newData.data_nascimento = dataFormatada;
 
-      await axios.post("http://127.0.0.1:8000/api/pessoa/salvar", newData);
+      const newDataV2 = { ...newData, localizacao: { ...location } };
+
+      await axios.post("http://127.0.0.1:8000/api/pessoa/salvar", newDataV2);
     } catch (e) {
       console.log(e);
     }
@@ -161,7 +171,7 @@ export default function Cadastro() {
                         <Label>Bloco</Label>
                         <Input
                           type="text"
-                          // onChange={handleField}
+                          onChange={handleRegistrarLocalizacao}
                           name="bloco"
                           placeholder="A"
                         />
@@ -170,7 +180,7 @@ export default function Cadastro() {
                         <Label>Andar</Label>
                         <Input
                           type="text"
-                          // onChange={handleField}
+                          onChange={handleRegistrarLocalizacao}
                           name="andar"
                           placeholder="10"
                         />
@@ -179,7 +189,7 @@ export default function Cadastro() {
                         <Label>Nº Apartamento</Label>
                         <Input
                           type="text"
-                          // onChange={handleField}
+                          onChange={handleRegistrarLocalizacao}
                           name="unidade"
                           placeholder="315"
                         />
