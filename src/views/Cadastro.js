@@ -15,9 +15,11 @@ import {
   Col,
 } from "reactstrap";
 
-// alterar nome exemplo para o nome da tela, exemplo: CadastroX
+import { format } from "date-fns";
+
 export default function Cadastro() {
   const [data, setData] = useState({});
+  const [ehPorteiro, setEhPorteiro] = useState(false);
 
   const handleField = (e) => {
     setData((prev) => ({
@@ -26,21 +28,30 @@ export default function Cadastro() {
     }));
   };
 
+  const checarSeEhMorador = (e) => {
+    if (e.target.value === "4") {
+      setEhPorteiro(true);
+    } else {
+      setEhPorteiro(false);
+    }
+  };
+
   const enviarDadosParaAPI = async (e) => {
     e.preventDefault();
     try {
       const newData = { ...data };
-      newData.senha = "1234";
-      newData.data_nascimento = "2012-09-04 06:00:00.000000-08:00";
-      newData.perfil = 6;
-      newData.ativo = 1;
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/pessoa/salvar",
-        newData
-      );
+      const dataFormatada = new Date(
+        format(
+          new Date(newData?.data_nascimento),
+          "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
+        )
+      ).toISOString();
 
-      console.log(response);
+      newData.perfil = parseInt(data.perfil);
+      newData.data_nascimento = dataFormatada;
+
+      await axios.post("http://127.0.0.1:8000/api/pessoa/salvar", newData);
     } catch (e) {
       console.log(e);
     }
@@ -77,31 +88,15 @@ export default function Cadastro() {
                     </Col>
                     <Col className="pl-1" md="8">
                       <FormGroup>
-                        <label htmlFor="InputEmail1">Email</label>
+                        <label htmlFor="InputEmail1">E-mail</label>
                         <Input
-                          placeholder="Email"
+                          placeholder="email@email.com.br"
                           type="email"
                           onChange={handleField}
                           name="email"
                         />
                       </FormGroup>
                     </Col>
-                  </Row>
-                  <Row>
-                  </Row>
-                  <Row>
-                  <FormGroup className="col-md-4">
-                                    <Label>Bloco</Label>
-                                    <Input type="text" onChange={handleField} name="bloco" placeholder="Bloco" />
-                                </FormGroup>
-                                <FormGroup className='col-md-4'>
-                                    <Label>Andar</Label>
-                                    <Input type="text" onChange={handleField} name="andar" placeholder="Andar" />
-                                </FormGroup>
-                                <FormGroup className='col-md-4'>
-                                    <Label>Nº Apartamento</Label>
-                                        <Input type="text" onChange={handleField} name="apto" placeholder="Nº Apartamento" />
-                                </FormGroup>
                   </Row>
                   <Row>
                     <Col className="pr-1" md="4">
@@ -138,15 +133,17 @@ export default function Cadastro() {
                     </Col>
                   </Row>
                   <Row>
-                  <Col className="pr-1" md="4">
-                      {/* exemplo de select */}
+                    <Col className="pr-1" md="4">
                       <FormGroup>
                         <Label for="perfil">Perfil</Label>
                         <Input
                           id="perfil"
                           name="perfil"
                           type="select"
-                          // onChange={handleField}
+                          onChange={(e) => {
+                            handleField(e);
+                            checarSeEhMorador(e);
+                          }}
                         >
                           <option></option>
                           <option value="1">Administrador</option>
@@ -155,41 +152,40 @@ export default function Cadastro() {
                           <option value="4">Morador</option>
                         </Input>
                       </FormGroup>
-                      {/* exemplo de select */}
                     </Col>
-                    <Col className="pr-1" md="4">
-                      <FormGroup>
-                        <label>Usuário</label>
+                  </Row>
+                  <hr />
+                  {ehPorteiro && (
+                    <Row>
+                      <FormGroup className="col-md-4">
+                        <Label>Bloco</Label>
                         <Input
                           type="text"
-                          name="usuario"
-                          onChange={handleField}
+                          // onChange={handleField}
+                          name="bloco"
+                          placeholder="A"
                         />
                       </FormGroup>
-                    </Col>
-                    <Col className="pr-1" md="4">
-                      <FormGroup>
-                        <label>Senha</label>
+                      <FormGroup className="col-md-4">
+                        <Label>Andar</Label>
                         <Input
-                          type="password"
-                          name="senha"
-                          onChange={handleField}
+                          type="text"
+                          // onChange={handleField}
+                          name="andar"
+                          placeholder="10"
                         />
                       </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <FormGroup>
-                        <label>Observações</label>
+                      <FormGroup className="col-md-4">
+                        <Label>Nº Apartamento</Label>
                         <Input
-                          type="textarea"
-                          name="descricaoCadastro"
-                          onChange={handleField}
+                          type="text"
+                          // onChange={handleField}
+                          name="unidade"
+                          placeholder="315"
                         />
                       </FormGroup>
-                    </Col>
-                  </Row>
+                    </Row>
+                  )}
                   <Row>
                     <div className="update ml-auto mr-auto">
                       <Button
