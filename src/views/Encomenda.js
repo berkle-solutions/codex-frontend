@@ -22,6 +22,9 @@ export default function Encomenda() {
 
   const [moradores, setMoradores] = useState([]);
   const [moradorSelecionado, setMoradorSelecionado] = useState(null);
+  const [dadosEncomenda, setDadosEncomenda] = useState({
+    descricao: null,
+  });
 
   const handleFilter = (e) => {
     setFilter((prev) => ({
@@ -50,7 +53,17 @@ export default function Encomenda() {
     if (e.target.value) setMoradorSelecionado(JSON.parse(e.target.value));
   };
 
-  console.log(moradorSelecionado);
+  const cadastrarEncomenda = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://127.0.0.1:8000/api/encomenda/salvar", {
+        descricao: dadosEncomenda,
+        pessoa: moradorSelecionado?.id,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -142,7 +155,12 @@ export default function Encomenda() {
                   <Label>Descrição da Encomenda</Label>
                   <Input
                     type="textarea"
-                    // onChange={handleField}
+                    onChange={(e) => {
+                      setDadosEncomenda((prev) => ({
+                        ...prev,
+                        descricao: e.target.value,
+                      }));
+                    }}
                     name="descricaoEncomenda"
                   />
                 </FormGroup>
@@ -151,7 +169,7 @@ export default function Encomenda() {
                 color="primary"
                 type="submit"
                 className="btn-round"
-                // onClick={enviarDadosParaAPI}
+                onClick={cadastrarEncomenda}
               >
                 Cadastrar
               </Button>
