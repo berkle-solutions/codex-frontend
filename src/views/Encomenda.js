@@ -149,6 +149,15 @@ export default function Encomenda() {
                     value={moradorSelecionado?.pessoa?.celular}
                   />
                 </FormGroup>
+                <FormGroup className="col-md-3">
+                  <Label>Código de Resgate</Label>
+                  <Input
+                    type="text"
+                    disabled
+                    name="codigoresgate"
+                    value={moradorSelecionado?.pessoa?.celular}
+                  />
+                </FormGroup>
               </div>
               <div className="form-row">
                 <FormGroup className="col-md-6">
