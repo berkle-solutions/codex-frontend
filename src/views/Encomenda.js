@@ -70,7 +70,7 @@ export default function Encomenda() {
       <div className="content">
         <Card className="card-user">
           <CardHeader>
-            <CardTitle tag="h5">Cadastro de Encomenda</CardTitle>
+            <CardTitle tag="h5">Entrada da Encomenda (Triagem)</CardTitle>
           </CardHeader>
           <CardBody>
             <Form>
@@ -149,15 +149,7 @@ export default function Encomenda() {
                     value={moradorSelecionado?.pessoa?.celular}
                   />
                 </FormGroup>
-                <FormGroup className="col-md-3">
-                  <Label>Código de Resgate</Label>
-                  <Input
-                    type="text"
-                    disabled
-                    name="codigoresgate"
-                    value={moradorSelecionado?.pessoa?.celular}
-                  />
-                </FormGroup>
+                
               </div>
               <div className="form-row">
                 <FormGroup className="col-md-6">
@@ -171,6 +163,51 @@ export default function Encomenda() {
                       }));
                     }}
                     name="descricaoEncomenda"
+                  />
+                </FormGroup>
+              </div>
+            </Form>
+          </CardBody>              
+          <CardHeader>
+            <CardTitle tag="h5">Cadastro no Estoque (Armazenamento)</CardTitle>
+          </CardHeader>
+          <CardBody>
+            <Form>            
+              <div className="form-row">
+                <FormGroup className="col-md-3">
+                  <Label>Estoque - Armário</Label>
+                  <Input
+                    type="text"
+                    disabled
+                    name="estoqueArmario"
+                    value={moradorSelecionado?.pessoa?.celular}
+                  />
+                </FormGroup>
+                <FormGroup className="col-md-3">
+                  <Label>Armário - Compartimento</Label>
+                  <Input
+                    type="text"
+                    disabled
+                    name="armarioCompartimento"
+                    value={moradorSelecionado?.pessoa?.celular}
+                  />
+                </FormGroup>
+              </div>
+            </Form>
+          </CardBody>
+          <CardHeader>
+            <CardTitle tag="h5">Entrega da Encomenda (Retirada)</CardTitle>
+          </CardHeader>
+          <CardBody>
+            <Form>   
+              <div className="form-row">
+                <FormGroup className="col-md-3">
+                  <Label>Código de Resgate</Label>
+                  <Input
+                    type="text"
+                    disabled
+                    name="codigoresgate"
+                    value={moradorSelecionado?.pessoa?.celular}
                   />
                 </FormGroup>
               </div>
