@@ -23,7 +23,14 @@ import Typography from "views/Typography.js";
 import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
-import UpgradeToPro from "views/Upgrade.js";
+// adicionar aqui o caminho até a view
+import Cadastro from "views/Cadastro.js";
+import Login from "views/Login.js";
+import Exemplo from "views/Exemplo";
+import Armario from "views/Armario";
+import Encomenda from "views/Encomenda";
+import Triagem from "views/Triagem";
+//import { Table } from "reactstrap";
 
 var routes = [
   {
@@ -63,7 +70,7 @@ var routes = [
   },
   {
     path: "/tables",
-    name: "Table List",
+    name: "Lista Encomendas",
     icon: "nc-icon nc-tile-56",
     component: TableList,
     layout: "/admin",
@@ -75,12 +82,47 @@ var routes = [
     component: Typography,
     layout: "/admin",
   },
+  // adicionar aqui em baixo em ordem as novas telas
   {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "nc-icon nc-spaceship",
-    component: UpgradeToPro,
+    path: "/cadastro",
+    name: "Cadastro de Pessoas",
+    icon: "nc-icon nc-badge",
+    component: Cadastro,
+    layout: "/admin",
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-lock-circle-open",
+    component: Login,
+    layout: "/admin",
+  },
+  {
+    path: "/exemplo",
+    name: "Exemplo",
+    icon: "nc-icon nc-caps-small",
+    component: Exemplo,
+    layout: "/admin",
+  },
+  {
+    path: "/armario",
+    name: "Armario",
+    icon: "nc-icon nc-box",
+    component: Armario,
+    layout: "/admin",
+  },
+  {
+    path: "/encomenda",
+    name: "Encomenda",
+    icon: "nc-icon nc-bag-16",
+    component: Encomenda,
+    layout: "/admin",
+  },
+  {
+    path: "/triagem",
+    name: " Triagem",
+    icon: "nc-icon nc-tile-56",
+    component: Triagem,
     layout: "/admin",
   },
 ];
