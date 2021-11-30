@@ -50,7 +50,7 @@ function Dashboard(props) {
       <div className="main-panel" ref={mainPanel}>
         <DemoNavbar {...props} />
         <Switch>
-          {routes.map((prop, key) => {
+          {routes("userType").map((prop, key) => {
             return (
               <Route
                 path={prop.layout + prop.path}
