@@ -30,8 +30,8 @@ export default function Login() {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      const authToken = await authUser(credentials);
-      console.log(authToken);
+      const { user, authToken } = await authUser(credentials);
+      console.log({ user, authToken });
     } catch (e) {
       console.log(e);
     }
