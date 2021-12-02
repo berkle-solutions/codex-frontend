@@ -53,9 +53,10 @@ const allRoutes = {
 };
 
 // TODO: remote this typeAccess default value
-const routes = (typeAccess = "admin") => [
-  ...userRoutesAccess["admin"]?.map((route) => allRoutes[route]),
-];
+const routes = (userRole) => {
+  console.log(userRole);
+  return [...userRoutesAccess[userRole]?.map((route) => allRoutes[route])];
+};
 
 // {
 //   path: "/dashboard",
