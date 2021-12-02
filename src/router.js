@@ -16,7 +16,7 @@ export const Router = () => {
         <PublicRoute exact path="/" isAuthenticated={isAuthenticated}>
           <Login />
         </PublicRoute>
-        <PrivateRoute path="/dashboard" isAuthenticated={isAuthenticated} />
+        <PrivateRoute path="/admin" isAuthenticated={isAuthenticated} />
         <Route path="*">
           <div>
             <h1>Página não encontrada</h1>

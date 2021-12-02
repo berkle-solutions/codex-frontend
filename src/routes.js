@@ -1,4 +1,3 @@
-// import Dashboard from "views/Dashboard.js";
 // import Notifications from "views/Notifications.js";
 // import Icons from "views/Icons.js";
 // import Typography from "views/Typography.js";
@@ -6,6 +5,7 @@
 // import Maps from "views/Map.js";
 // import UserPage from "views/User.js";
 // adicionar aqui o caminho até a view
+import Dashboard from "views/PrivateViews/Dashboard.js";
 import Cadastro from "views/PrivateViews/Cadastro.js";
 import Armario from "views/PrivateViews/Armario";
 import Encomenda from "views/PrivateViews/Encomenda";
@@ -15,6 +15,13 @@ import Triagem from "views/PrivateViews/Triagem";
 import { userTypes, userRoutesAccess } from "./variables/enums";
 
 const allRoutes = {
+  dashboard: {
+    path: "/",
+    name: "Dashboard",
+    icon: "nc-icon nc-bank",
+    component: Dashboard,
+    layout: "/admin",
+  },
   cadastro: {
     path: "/cadastro",
     name: "Cadastro de Pessoas",

@@ -53,6 +53,7 @@ function Dashboard(props) {
           {routes("userType").map((prop, key) => {
             return (
               <Route
+                exact
                 path={prop.layout + prop.path}
                 component={prop.component}
                 key={key}
@@ -62,12 +63,6 @@ function Dashboard(props) {
         </Switch>
         <Footer fluid />
       </div>
-      <FixedPlugin
-        bgColor={backgroundColor}
-        activeColor={activeColor}
-        handleActiveClick={handleActiveClick}
-        handleBgClick={handleBgClick}
-      />
     </div>
   );
 }

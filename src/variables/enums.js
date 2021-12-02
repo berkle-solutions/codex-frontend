@@ -5,7 +5,13 @@ export const userTypes = {
 };
 
 export const userRoutesAccess = {
-  [userTypes.ADMIN]: ["cadastro", "armario", "encomenda", "triagem"],
-  [userTypes.PORTEIRO]: ["triagem", "encomenda"],
-  [userTypes.ESTOQUISTA]: ["triagem", "armario"],
+  [userTypes.ADMIN]: [
+    "dashboard",
+    "cadastro",
+    "armario",
+    "encomenda",
+    "triagem",
+  ],
+  [userTypes.PORTEIRO]: ["dashboard", "triagem", "encomenda"],
+  [userTypes.ESTOQUISTA]: ["dashboard", "triagem", "armario"],
 };
