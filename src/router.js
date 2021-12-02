@@ -10,7 +10,7 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <PublicRoute path="/login" isAuthenticated={isAuthenticated}>
+        <PublicRoute exact path="/" isAuthenticated={isAuthenticated}>
           <div>usuário não autenticado</div>
         </PublicRoute>
         <PrivateRoute path="/dashboard" isAuthenticated={isAuthenticated} />
