@@ -7,5 +7,11 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import { Router } from "./router";
+import { MainContext } from "./store/MainContext";
 
-ReactDOM.render(<Router />, document.getElementById("root"));
+ReactDOM.render(
+  <MainContext>
+    <Router />
+  </MainContext>,
+  document.getElementById("root")
+);

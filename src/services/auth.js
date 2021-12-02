@@ -3,9 +3,9 @@ export const USER_PROFILE = "user";
 
 export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY) !== null;
 
-export const retriveToken = () => localStorage.getItem(TOKEN_KEY);
+export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
-export const login = (token) => {
+export const setToken = (token) => {
   if (token !== undefined) {
     localStorage.setItem(TOKEN_KEY, token);
     return true;

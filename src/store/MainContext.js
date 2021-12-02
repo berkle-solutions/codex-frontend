@@ -1,4 +1,6 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
+
+import { setToken } from "../services/auth";
 
 const MainContextProvider = createContext({});
 
@@ -8,6 +10,10 @@ export const MainContext = ({ children }) => {
     token: "",
     refreshToken: "",
   });
+
+  useEffect(() => {
+    if (state.token) setToken(state.token);
+  }, [state]);
 
   return (
     <MainContextProvider.Provider value={{ state, setState }}>

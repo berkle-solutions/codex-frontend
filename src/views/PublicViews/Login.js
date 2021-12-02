@@ -17,8 +17,11 @@ import {
 
 import { authUser } from "../../services/codex";
 
+import { useMainContext } from "../../store/MainContext";
+
 export default function Login() {
   const [credentials, setCredentials] = useState({});
+  const { setState } = useMainContext();
 
   const handleCredentialsFields = (e) => {
     setCredentials((prev) => ({
@@ -31,9 +34,15 @@ export default function Login() {
     e.preventDefault();
     try {
       const { user, authToken } = await authUser(credentials);
-      console.log({ user, authToken });
+      setState((prev) => ({
+        ...prev,
+        user,
+        token: authToken.access,
+        refreshToken: authToken.refresh,
+      }));
     } catch (e) {
-      console.log(e);
+      // TODO: return alert with error
+      console.error(e);
     }
   };
 
