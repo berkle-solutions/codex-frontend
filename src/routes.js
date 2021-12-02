@@ -1,28 +1,20 @@
-import Dashboard from "views/Dashboard.js";
-import Notifications from "views/Notifications.js";
-import Icons from "views/Icons.js";
-import Typography from "views/Typography.js";
-import TableList from "views/Tables.js";
-import Maps from "views/Map.js";
-import UserPage from "views/User.js";
+// import Dashboard from "views/Dashboard.js";
+// import Notifications from "views/Notifications.js";
+// import Icons from "views/Icons.js";
+// import Typography from "views/Typography.js";
+// import TableList from "views/Tables.js";
+// import Maps from "views/Map.js";
+// import UserPage from "views/User.js";
 // adicionar aqui o caminho até a view
-import Cadastro from "views/Cadastro.js";
-import Login from "views/Login.js";
-import Armario from "views/Armario";
-import Encomenda from "views/Encomenda";
-import Triagem from "views/Triagem";
+import Cadastro from "views/PrivateViews/Cadastro.js";
+import Armario from "views/PrivateViews/Armario";
+import Encomenda from "views/PrivateViews/Encomenda";
+import Triagem from "views/PrivateViews/Triagem";
 //import { Table } from "reactstrap";
 
 import { userTypes, userRoutesAccess } from "./variables/enums";
 
 const allRoutes = {
-  login: {
-    path: "/login",
-    name: "Login",
-    icon: "nc-icon nc-lock-circle-open",
-    component: Login,
-    layout: "/admin",
-  },
   cadastro: {
     path: "/cadastro",
     name: "Cadastro de Pessoas",

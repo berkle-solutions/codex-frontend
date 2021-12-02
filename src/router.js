@@ -1,8 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "./components/Routes";
-
 import { retriveToken } from "./services/auth";
+// views
+import Login from "./views/PublicViews/Login";
 
 export const Router = () => {
   const isAuthenticated = retriveToken();
@@ -11,7 +12,7 @@ export const Router = () => {
     <BrowserRouter>
       <Switch>
         <PublicRoute exact path="/" isAuthenticated={isAuthenticated}>
-          <div>usuário não autenticado</div>
+          <Login />
         </PublicRoute>
         <PrivateRoute path="/dashboard" isAuthenticated={isAuthenticated} />
         <Route path="*">
