@@ -5,14 +5,15 @@
 // import Maps from "views/Map.js";
 // import UserPage from "views/User.js";
 // adicionar aqui o caminho até a view
+//import { Table } from "reactstrap";
+
 import Dashboard from "views/PrivateViews/Dashboard.js";
 import Cadastro from "views/PrivateViews/Cadastro.js";
 import Armario from "views/PrivateViews/Armario";
 import Encomenda from "views/PrivateViews/Encomenda";
 import Triagem from "views/PrivateViews/Triagem";
-//import { Table } from "reactstrap";
 
-import { userTypes, userRoutesAccess } from "./variables/enums";
+import { userRoutesAccess } from "./variables/enums";
 
 const allRoutes = {
   dashboard: {
@@ -38,25 +39,23 @@ const allRoutes = {
   },
   encomenda: {
     path: "/encomenda",
-    name: "Encomenda",
+    name: "Cadastro Encomendas",
     icon: "nc-icon nc-bag-16",
     component: Encomenda,
     layout: "/admin",
   },
   triagem: {
     path: "/triagem",
-    name: " Triagem",
+    name: " Lista de Encomendas",
     icon: "nc-icon nc-tile-56",
     component: Triagem,
     layout: "/admin",
   },
 };
 
-// TODO: remote this typeAccess default value
-const routes = (userRole) => {
-  console.log(userRole);
-  return [...userRoutesAccess[userRole]?.map((route) => allRoutes[route])];
-};
+const routes = (userRole) => [
+  ...userRoutesAccess[userRole]?.map((route) => allRoutes[route]),
+];
 
 // {
 //   path: "/dashboard",
@@ -107,6 +106,5 @@ const routes = (userRole) => {
 //   component: Typography,
 //   layout: "/admin",
 // },
-// adicionar aqui em baixo em ordem as novas telas
 
 export default routes;
