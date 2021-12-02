@@ -14,8 +14,12 @@ import {
 
 import axios from "axios";
 
+import { useHistory } from "react-router-dom";
+
 function Triagem() {
   const [encomendas, setEncomendas] = useState([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     retornaListaDeEncomendas();
@@ -30,6 +34,11 @@ function Triagem() {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const goToEncomendaDetail = (id) => {
+    // TODO: modify to encomenda detail
+    history.push(`/admin/encomenda/detalhe/${id}`);
   };
 
   console.log(encomendas);
@@ -69,7 +78,12 @@ function Triagem() {
                           Retirado
                         </td>
                         <td className="text-right">
-                          <Button color="primary">Ver mais</Button>
+                          <Button
+                            color="primary"
+                            onClick={() => goToEncomendaDetail(encomenda?.id)}
+                          >
+                            Ver mais
+                          </Button>
                         </td>
                       </tr>
                     ))}

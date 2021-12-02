@@ -11,6 +11,7 @@ import Dashboard from "views/PrivateViews/Dashboard.js";
 import Cadastro from "views/PrivateViews/Cadastro.js";
 import Armario from "views/PrivateViews/Armario";
 import Encomenda from "views/PrivateViews/Encomenda";
+import EncomendaDetalhe from "views/PrivateViews/EncomendaDetalhe";
 import Triagem from "views/PrivateViews/Triagem";
 import Estoque from "views/PrivateViews/Estoque";
 
@@ -23,6 +24,7 @@ const allRoutes = {
     icon: "nc-icon nc-bank",
     component: Dashboard,
     layout: "/admin",
+    show: true,
   },
   cadastro: {
     path: "/cadastro",
@@ -30,6 +32,7 @@ const allRoutes = {
     icon: "nc-icon nc-badge",
     component: Cadastro,
     layout: "/admin",
+    show: false,
   },
   armario: {
     path: "/armario",
@@ -37,6 +40,7 @@ const allRoutes = {
     icon: "nc-icon nc-box",
     component: Armario,
     layout: "/admin",
+    show: true,
   },
   encomenda: {
     path: "/encomenda",
@@ -44,6 +48,15 @@ const allRoutes = {
     icon: "nc-icon nc-bag-16",
     component: Encomenda,
     layout: "/admin",
+    show: true,
+  },
+  encomenda_detalhe: {
+    path: "/encomenda/detalhe/:id",
+    name: "Detalhe Encomendas",
+    icon: "nc-icon nc-bag-16",
+    component: EncomendaDetalhe,
+    layout: "/admin",
+    show: false,
   },
   estoque: {
     path: "/estoque",
@@ -51,6 +64,7 @@ const allRoutes = {
     icon: "nc-icon nc-bag-16",
     component: Estoque,
     layout: "/admin",
+    show: true,
   },
   triagem: {
     path: "/triagem",
@@ -58,6 +72,7 @@ const allRoutes = {
     icon: "nc-icon nc-tile-56",
     component: Triagem,
     layout: "/admin",
+    show: true,
   },
 };
 

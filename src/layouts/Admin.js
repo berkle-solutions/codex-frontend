@@ -53,16 +53,14 @@ function Dashboard(props) {
       <div className="main-panel" ref={mainPanel}>
         <DemoNavbar {...props} routes={routesByRole} />
         <Switch>
-          {routesByRole.map((prop, key) => {
-            return (
-              <Route
-                exact
-                path={prop.layout + prop.path}
-                component={prop.component}
-                key={key}
-              />
-            );
-          })}
+          {routesByRole.map((prop, key) => (
+            <Route
+              exact
+              path={prop.layout + prop.path}
+              component={prop.component}
+              key={key}
+            />
+          ))}
         </Switch>
         <Footer fluid />
       </div>
