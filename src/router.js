@@ -1,12 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "./components/Routes";
+import { useMainContext } from "./store/MainContext";
 import { getToken } from "./services/auth";
 // views
 import Login from "./views/PublicViews/Login";
 
 export const Router = () => {
-  const isAuthenticated = getToken();
+  const { state } = useMainContext();
+  const isAuthenticated = state.token || getToken();
 
   return (
     <BrowserRouter>
