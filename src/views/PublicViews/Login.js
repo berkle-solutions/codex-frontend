@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import {
+  Container,
   Button,
   Card,
   CardHeader,
   CardBody,
   CardTitle,
+  CardSubtitle,
   FormGroup,
   Form,
   Input,
   Row,
   Col,
 } from "reactstrap";
-
 
 // alterar nome exemplo para o nome da tela, exemplo: CadastroX
 export default function Login() {
@@ -46,56 +47,61 @@ export default function Login() {
     }
   };
   return (
-    <>
-      <div className="content">
-        <Row>
-          <Col>
-            <Card className="card-user">
-              <CardHeader>
-                <CardTitle tag="h5">Login</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Form>
-                  <Row>
+    <Container>
+      <Row>
+        <Col>
+          <Card className="card-user">
+            <CardHeader>
+              <CardTitle tag="h5" style={{ textAlign: "center" }}>
+                Codex
+              </CardTitle>
+              <CardSubtitle style={{ textAlign: "center" }}>
+                Gestão de encomendas
+              </CardSubtitle>
+            </CardHeader>
+            <CardBody>
+              <Form>
+                <Row style={{ justifyContent: "center" }}>
                   <Col className="pr-1" md="5">
-                      <FormGroup>
-                        <label>Usuário</label>
-                        <Input
-                          type="text"
-                          name="usuario"
-                          onChange={handleField}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-1" md="5">
-                      <FormGroup>
-                        <label>Senha</label>
-                        <Input
-                          type="password"
-                          name="senha"
-                          onChange={handleField}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <div className="update ml-auto mr-auto">
-                      <Button
-                        className="btn-round"
-                        onClick={enviarDadosParaAPI}
-                        color="primary"
-                        type="submit"
-                      >
-                        Entrar
-                      </Button>
-                    </div>
-                  </Row>
-                </Form>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-    </>
+                    <FormGroup>
+                      <label>Usuário</label>
+                      <Input
+                        type="text"
+                        name="usuario"
+                        onChange={handleField}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row style={{ justifyContent: "center" }}>
+                  <Col className="pr-1" md="5">
+                    <FormGroup>
+                      <label>Senha</label>
+                      <Input
+                        type="password"
+                        name="senha"
+                        onChange={handleField}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <div className="update ml-auto mr-auto">
+                    <Button
+                      className="btn-round"
+                      onClick={enviarDadosParaAPI}
+                      color="primary"
+                      type="submit"
+                    >
+                      Entrar
+                    </Button>
+                  </div>
+                </Row>
+              </Form>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
