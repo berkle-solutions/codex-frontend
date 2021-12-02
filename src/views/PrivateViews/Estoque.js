@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+// reactstrap components
 import {
   Button,
   FormGroup,
@@ -13,9 +14,7 @@ import {
   Form,
 } from "reactstrap";
 
-import { useHistory } from "react-router-dom";
-
-export default function Encomenda() {
+export default function Estoque() {
   const [filter, setFilter] = useState({
     bloco: null,
     andar: null,
@@ -25,10 +24,7 @@ export default function Encomenda() {
   const [moradorSelecionado, setMoradorSelecionado] = useState(null);
   const [dadosEncomenda, setDadosEncomenda] = useState({
     descricao: null,
-    unidade: null,
   });
-
-  const history = useHistory();
 
   const handleFilter = (e) => {
     setFilter((prev) => ({
@@ -61,12 +57,9 @@ export default function Encomenda() {
     e.preventDefault();
     try {
       await axios.post("http://127.0.0.1:8000/api/encomenda/salvar", {
-        descricao: dadosEncomenda.descricao,
-        unidade: dadosEncomenda.unidade,
+        descricao: dadosEncomenda,
         pessoa: moradorSelecionado?.id,
       });
-
-      history.push("/admin/triagem");
     } catch (e) {
       console.log(e);
     }
@@ -171,24 +164,50 @@ export default function Encomenda() {
                     name="descricaoEncomenda"
                   />
                 </FormGroup>
-                <FormGroup className="col-md-3 col-sm-12">
-                  <Label>Qtd. Unidades</Label>
+              </div>
+            </Form>
+          </CardBody>
+          <CardHeader>
+            <CardTitle tag="h5">Cadastro no Estoque (Armazenamento)</CardTitle>
+          </CardHeader>
+          <CardBody>
+            <Form>
+              <div className="form-row">
+                <FormGroup className="col-md-3">
+                  <Label>Estoque - Armário</Label>
                   <Input
-                    type="select"
-                    onChange={(e) => {
-                      setDadosEncomenda((prev) => ({
-                        ...prev,
-                        [e.target.name]: e.target.value,
-                      }));
-                    }}
-                    name="unidade"
-                    placeholder="Unidades"
-                  >
-                    <option></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </Input>
+                    type="text"
+                    disabled
+                    name="estoqueArmario"
+                    value={moradorSelecionado?.pessoa?.celular}
+                  />
+                </FormGroup>
+                <FormGroup className="col-md-3">
+                  <Label>Armário - Compartimento</Label>
+                  <Input
+                    type="text"
+                    disabled
+                    name="armarioCompartimento"
+                    value={moradorSelecionado?.pessoa?.celular}
+                  />
+                </FormGroup>
+              </div>
+            </Form>
+          </CardBody>
+          <CardHeader>
+            <CardTitle tag="h5">Entrega da Encomenda (Retirada)</CardTitle>
+          </CardHeader>
+          <CardBody>
+            <Form>
+              <div className="form-row">
+                <FormGroup className="col-md-3">
+                  <Label>Código de Resgate</Label>
+                  <Input
+                    type="text"
+                    disabled
+                    name="codigoresgate"
+                    value={moradorSelecionado?.pessoa?.celular}
+                  />
                 </FormGroup>
               </div>
               <Button
