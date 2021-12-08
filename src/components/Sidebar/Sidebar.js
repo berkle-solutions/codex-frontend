@@ -27,6 +27,8 @@ function Sidebar(props) {
       }
     };
   });
+
+  console.log(props);
   return (
     <div
       className="sidebar"
@@ -58,12 +60,7 @@ function Sidebar(props) {
           {props.routes?.map(
             (prop, key) =>
               prop?.show && (
-                <li
-                  className={
-                    activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
-                  }
-                  key={key}
-                >
+                <li className={activeRoute(prop.path)} key={key}>
                   <NavLink
                     to={prop.layout + prop.path}
                     className="nav-link"

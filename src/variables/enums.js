@@ -9,6 +9,7 @@ export const userRoutesAccess = {
     "dashboard",
     "cadastro",
     "armario",
+    "estoque",
     "encomenda",
     "encomenda_detalhe",
     "triagem",
