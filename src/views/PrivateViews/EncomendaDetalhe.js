@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import apiService from "../../services/";
 
 import {
   Button,
@@ -12,7 +11,7 @@ import {
   CardBody,
   Form,
 } from "reactstrap";
-
+import { getEncomendaById, rescueEncomenda } from "../../services/codex";
 import { useHistory, useParams } from "react-router-dom";
 
 export default function EncomendaDetalhe() {
@@ -34,40 +33,42 @@ export default function EncomendaDetalhe() {
   });
 
   const history = useHistory();
-  const { id } = useParams();
+  const { id: encomendaId } = useParams();
 
   useEffect(() => {
-    const retornaEncomendaDetalhe = async () => {
-      try {
-        const { data } = await apiService.get(`/encomenda/detalhe/${id}`);
-        console.log(data);
-        setEncomenda({
-          morador: {
-            id: data.pessoa.id,
-            nome: data.pessoa.nome,
-            celular: data.pessoa.celular,
-            cpf: data.pessoa.celular,
-          },
-          encomenda: {
-            descricao: data.descricao,
-            unidade: data.unidade,
-            codigo_resgate: data.codigo_resgate,
-          },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    };
     retornaEncomendaDetalhe();
   }, []);
+
+  const retornaEncomendaDetalhe = async () => {
+    try {
+      const response = await getEncomendaById(encomendaId);
+
+      setEncomenda({
+        morador: {
+          id: response.pessoa.id,
+          nome: response.pessoa.nome,
+          celular: response.pessoa.celular,
+          cpf: response.pessoa.celular,
+        },
+        encomenda: {
+          descricao: response?.encomenda?.descricao,
+          unidade: response?.encomenda?.unidade,
+          codigo_resgate: response?.encomenda?.codigo_resgate,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const resgatarEncomenda = async (e) => {
     e.preventDefault();
     try {
-      await apiService.post("/encomenda/resgate", {
+      const dadosEncomenda = {
         pessoa: encomenda.morador.id,
         codigo_resgate: encomenda.encomenda.codigo_resgate,
-      });
+      };
+      await rescueEncomenda(dadosEncomenda);
     } catch (e) {
       console.error(e);
     }

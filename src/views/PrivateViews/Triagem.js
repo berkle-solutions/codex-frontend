@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-// reactstrap components
 import {
   Button,
   Card,
@@ -12,7 +11,7 @@ import {
   Col,
 } from "reactstrap";
 
-import axios from "axios";
+import { getEncomendas } from "../../services/codex";
 
 import { useHistory } from "react-router-dom";
 
@@ -34,10 +33,8 @@ function Triagem() {
 
   const retornaListaDeEncomendas = async () => {
     try {
-      const { data } = await axios.get(
-        "http://127.0.0.1:8000/api/encomenda/lista"
-      );
-      setEncomendas(data);
+      const response = await getEncomendas();
+      setEncomendas(response);
     } catch (e) {
       console.log(e);
     }
