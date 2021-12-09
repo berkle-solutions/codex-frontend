@@ -16,6 +16,13 @@ import axios from "axios";
 
 import { useHistory } from "react-router-dom";
 
+const STATUS_FILA_TYPES = {
+  Triagem: "yellow",
+  "Em Estoque": "orange",
+  Retirado: "green",
+  "Em Atraso": "red",
+};
+
 function Triagem() {
   const [encomendas, setEncomendas] = useState([]);
 
@@ -65,17 +72,20 @@ function Triagem() {
                   </thead>
                   <tbody>
                     {encomendas?.map((encomenda) => (
-                      <tr key={encomenda?.id}>
-                        <td>{encomenda?.unidade}</td>
-                        <td>{encomenda?.descricao}</td>
+                      <tr key={encomenda?.encomenda?.id}>
+                        <td>{encomenda?.encomenda?.unidade}</td>
+                        <td>{encomenda?.encomenda?.descricao}</td>
                         <td>{encomenda?.pessoa?.nome}</td>
                         <td
                           style={{
-                            color: "green",
+                            color:
+                              STATUS_FILA_TYPES[
+                                encomenda?.status_fila?.descricao
+                              ],
                             fontWeight: "bold",
                           }}
                         >
-                          Retirado
+                          {encomenda?.status_fila?.descricao}
                         </td>
                         <td className="text-right">
                           <Button
