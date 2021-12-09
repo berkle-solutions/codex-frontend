@@ -11,11 +11,19 @@ import {
   CardBody,
   Form,
 } from "reactstrap";
-import { getEncomendaById, rescueEncomenda } from "../../services/codex";
+import {
+  getEncomendaById,
+  rescueEncomenda,
+  getAllCompartimentosDisponiveis,
+} from "../../services/codex";
 import { useHistory, useParams } from "react-router-dom";
 
 export default function EncomendaDetalhe() {
   const [codigoResgate, setCodigoResgate] = useState(null);
+  const [armario, setArmario] = useState(null);
+  const [compartimentos, setCompartimentos] = useState([]);
+  const [compartimentoSelecionado, setCompartimentoSelecionado] =
+    useState(null);
   const [encomenda, setEncomenda] = useState({
     morador: {
       id: "",
@@ -38,6 +46,19 @@ export default function EncomendaDetalhe() {
   useEffect(() => {
     retornaEncomendaDetalhe();
   }, []);
+
+  useEffect(() => {
+    armario && retornaArmarioDisponiveis(armario);
+  }, [armario]);
+
+  const retornaArmarioDisponiveis = async (armarioId) => {
+    try {
+      const response = await getAllCompartimentosDisponiveis(armarioId);
+      setCompartimentos(response);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const retornaEncomendaDetalhe = async () => {
     try {
@@ -129,7 +150,7 @@ export default function EncomendaDetalhe() {
                   </Input>
                 </FormGroup>
               </div>
-              <div className="form-row">
+              {/* <div className="form-row">
                 <FormGroup className="col-md-3 col-sm-12">
                   <Label>Código de Resgate</Label>
                   <Input
@@ -139,15 +160,79 @@ export default function EncomendaDetalhe() {
                     onChange={(e) => setCodigoResgate(e.target.value)}
                   />
                 </FormGroup>
+              </div> */}
+            </Form>
+          </CardBody>
+          <hr />
+          <CardBody>
+            <Form>
+              <div className="form-row">
+                <FormGroup className="col-md-3">
+                  <Label>Estoque - Armário</Label>
+                  <Input
+                    type="select"
+                    name="armario"
+                    placeholder="Armarios"
+                    value={armario}
+                    onChange={(e) => setArmario(e.target.value)}
+                  >
+                    <option></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                    <option value="3">5</option>
+                  </Input>
+                </FormGroup>
+                <FormGroup className="col-md-3">
+                  <Label>Armário - Compartimento</Label>
+                  <Input
+                    type="select"
+                    name="compartimento"
+                    placeholder="Compartimentos"
+                    value={compartimentoSelecionado}
+                    onChange={(e) =>
+                      setCompartimentoSelecionado(e.target.value)
+                    }
+                  >
+                    <option></option>
+                    {compartimentos?.map((compartimento) => {
+                      return (
+                        !compartimento?.ocupado && (
+                          <option
+                            key={compartimento.id}
+                            value={compartimento.id}
+                          >
+                            {compartimento.descricao}
+                          </option>
+                        )
+                      );
+                    })}
+                  </Input>
+                </FormGroup>
               </div>
-              <Button
-                color="primary"
-                type="submit"
-                className="btn-round"
-                onClick={resgatarEncomenda}
-              >
-                Efetuar Resgate
-              </Button>
+              <div className="form-row">
+                <Button
+                  color="primary"
+                  type="submit"
+                  className="btn-round"
+                  onClick={resgatarEncomenda}
+                >
+                  Efetuar Resgate
+                </Button>
+              </div>
+
+              {/* <div className="form-row">
+                <FormGroup className="col-md-3 col-sm-12">
+                  <Label>Código de Resgate</Label>
+                  <Input
+                    type="text"
+                    name="descricaoEncomenda"
+                    value={codigoResgate}
+                    onChange={(e) => setCodigoResgate(e.target.value)}
+                  />
+                </FormGroup>
+              </div> */}
             </Form>
           </CardBody>
         </Card>

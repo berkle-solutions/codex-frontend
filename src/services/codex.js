@@ -37,3 +37,14 @@ export const rescueEncomenda = async ({ pessoaId, codigoResgate }) => {
     throw new Error("RescueEncomendaService error: ", e);
   }
 };
+
+export const getAllCompartimentosDisponiveis = async (armarioId) => {
+  try {
+    const { data } = await apiService.get(
+      `compartimento/lista-por-armario/${armarioId}`
+    );
+    return data;
+  } catch (e) {
+    throw new Error("CompartimentosService error: ", e);
+  }
+};
