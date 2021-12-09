@@ -48,3 +48,13 @@ export const getAllCompartimentosDisponiveis = async (armarioId) => {
     throw new Error("CompartimentosService error: ", e);
   }
 };
+
+export const saveEncomendaCompartimento = async ({ id, ...compartimento }) => {
+  try {
+    await apiService.put(`compartimento/atualizar/${id}`, {
+      ...compartimento,
+    });
+  } catch (e) {
+    throw new Error("EncomendaCompartimentoService error: ", e);
+  }
+};

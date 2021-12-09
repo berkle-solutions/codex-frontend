@@ -15,6 +15,7 @@ import {
   getEncomendaById,
   rescueEncomenda,
   getAllCompartimentosDisponiveis,
+  saveEncomendaCompartimento,
 } from "../../services/codex";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -24,6 +25,7 @@ export default function EncomendaDetalhe() {
   const [compartimentos, setCompartimentos] = useState([]);
   const [compartimentoSelecionado, setCompartimentoSelecionado] =
     useState(null);
+
   const [encomenda, setEncomenda] = useState({
     morador: {
       id: "",
@@ -77,6 +79,19 @@ export default function EncomendaDetalhe() {
           codigo_resgate: response?.encomenda?.codigo_resgate,
         },
       });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const salvarEncomendaCompartimento = async (e) => {
+    e.preventDefault();
+    try {
+      const compartimentoData = {
+        ...compartimentos[compartimentoSelecionado - 1],
+        ocupado: true,
+      };
+      await saveEncomendaCompartimento(compartimentoData);
     } catch (e) {
       console.error(e);
     }
@@ -216,9 +231,9 @@ export default function EncomendaDetalhe() {
                   color="primary"
                   type="submit"
                   className="btn-round"
-                  onClick={resgatarEncomenda}
+                  onClick={salvarEncomendaCompartimento}
                 >
-                  Efetuar Resgate
+                  Registrar Compartimento
                 </Button>
               </div>
 
