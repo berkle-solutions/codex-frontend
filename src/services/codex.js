@@ -49,6 +49,20 @@ export const getAllCompartimentosDisponiveis = async (armarioId) => {
   }
 };
 
+export const saveEncomendaEstoque = async ({
+  encomendaId,
+  compartimentoId,
+}) => {
+  try {
+    await apiService.post("encomenda/estoque", {
+      encomenda: encomendaId,
+      compartimento: parseInt(compartimentoId),
+    });
+  } catch (e) {
+    throw new Error("EncomendaEstoqueService error: ", e);
+  }
+};
+
 export const saveEncomendaCompartimento = async ({ id, ...compartimento }) => {
   try {
     await apiService.put(`compartimento/atualizar/${id}`, {

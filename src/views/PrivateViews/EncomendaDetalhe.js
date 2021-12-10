@@ -15,6 +15,7 @@ import {
   getEncomendaById,
   rescueEncomenda,
   getAllCompartimentosDisponiveis,
+  saveEncomendaEstoque,
   saveEncomendaCompartimento,
 } from "../../services/codex";
 import { useHistory, useParams } from "react-router-dom";
@@ -36,10 +37,12 @@ export default function EncomendaDetalhe() {
       celular: "",
     },
     encomenda: {
+      id: "",
       descricao: "",
       unidade: "",
       codigo_resgate: "",
     },
+    compartimento: false,
   });
 
   const history = useHistory();
@@ -74,10 +77,19 @@ export default function EncomendaDetalhe() {
           cpf: response.pessoa.celular,
         },
         encomenda: {
+          id: response?.encomenda?.id,
           descricao: response?.encomenda?.descricao,
           unidade: response?.encomenda?.unidade,
           codigo_resgate: response?.encomenda?.codigo_resgate,
         },
+        ...(response?.compartimento && {
+          compartimento: {
+            id: response?.compartimento?.id,
+            descricao: response?.compartimento?.descricao,
+            ocupado: response?.compartimento?.ocupado,
+            armario: response?.compartimento?.armario,
+          },
+        }),
       });
     } catch (e) {
       console.error(e);
@@ -87,11 +99,18 @@ export default function EncomendaDetalhe() {
   const salvarEncomendaCompartimento = async (e) => {
     e.preventDefault();
     try {
-      const compartimentoData = {
+      const encomendaEstoqueData = {
+        encomendaId: encomenda?.encomenda?.id,
+        compartimentoId: compartimentoSelecionado,
+      };
+
+      const encomendaCompartimentoData = {
         ...compartimentos[compartimentoSelecionado - 1],
         ocupado: true,
       };
-      await saveEncomendaCompartimento(compartimentoData);
+
+      await saveEncomendaEstoque(encomendaEstoqueData);
+      await saveEncomendaCompartimento(encomendaCompartimentoData);
     } catch (e) {
       console.error(e);
     }
@@ -109,6 +128,8 @@ export default function EncomendaDetalhe() {
       console.error(e);
     }
   };
+
+  console.log(encomenda);
 
   return (
     <>
@@ -178,6 +199,18 @@ export default function EncomendaDetalhe() {
               </div> */}
             </Form>
           </CardBody>
+          <hr />
+          {encomenda?.compartimento && (
+            <>
+              <p>
+                compartimento - armario: {encomenda?.compartimento?.armario}
+              </p>
+              <p>
+                compartimento - compartimento:{" "}
+                {encomenda?.compartimento?.descricao}
+              </p>
+            </>
+          )}
           <hr />
           <CardBody>
             <Form>
