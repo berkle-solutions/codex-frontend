@@ -19,7 +19,12 @@ export const userRoutesAccess = {
     "triagem",
     "encomenda",
     "encomenda_detalhe",
-    "cadastro",
   ],
-  [userTypes.ESTOQUISTA]: ["dashboard", "triagem", "armario"],
+  [userTypes.ESTOQUISTA]: [
+    "dashboard",
+    "triagem",
+    "resgate",
+    "encomenda_detalhe",
+    "armario",
+  ],
 };
