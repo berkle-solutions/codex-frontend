@@ -8,7 +8,6 @@ export const userRoutesAccess = {
   [userTypes.ADMIN]: [
     "dashboard",
     "cadastro",
-    "armario",
     "encomenda",
     "encomenda_detalhe",
     "resgate",
@@ -25,6 +24,5 @@ export const userRoutesAccess = {
     "triagem",
     "resgate",
     "encomenda_detalhe",
-    "armario",
   ],
 };

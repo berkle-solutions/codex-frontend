@@ -126,3 +126,11 @@ export const resendTokenPIN = async (pinId) => {
     throw new Error("ResendTokenService error: ", e);
   }
 };
+
+export const registerArmario = async (data) => {
+  try {
+    await apiService.post("/armario/salvar", data);
+  } catch (e) {
+    throw new Error("RegisterArmarioService error: ", e);
+  }
+};

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -13,11 +12,12 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { registerArmario } from "../../services/codex";
+import { useHistory } from "react-router-dom";
 
-
-// alterar nome exemplo para o nome da tela, exemplo: CadastroX
 export default function Armario() {
   const [data, setData] = useState({});
+  const history = useHistory();
 
   const handleField = (e) => {
     setData((prev) => ({
@@ -28,22 +28,15 @@ export default function Armario() {
 
   const enviarDadosParaAPI = async (e) => {
     e.preventDefault();
-    try {
-      const newData = { ...data };
-      newData.senha = "1234";
-      newData.data_nascimento = "2012-09-04 06:00:00.000000-08:00";
-      newData.perfil = 6;
-      newData.ativo = 1;
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/armario/salvar",
-        newData
-      );
-
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
+    toast
+      .promise(registerArmario(data), {
+        pending: "Processando informações",
+        success: "Armario cadastrado com sucesso",
+        error: "Falha ao cadastrar armario",
+      })
+      .then(() => history.push("/admin/triagem"))
+      .catch((e) => console.error(e));
   };
   return (
     <>
@@ -80,7 +73,7 @@ export default function Armario() {
                       </FormGroup>
                     </Col>
                   </Row>
-                 <Row>
+                  <Row>
                     <Col md="12">
                       <FormGroup>
                         <label>Descrição</label>
@@ -99,7 +92,8 @@ export default function Armario() {
                         className="btn-round"
                         color="primary"
                         type="submit"
-                        onClick={enviarDadosParaAPI}>
+                        onClick={enviarDadosParaAPI}
+                      >
                         Atualiza Cadastro
                       </Button>
                     </div>
