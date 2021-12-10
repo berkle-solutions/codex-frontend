@@ -32,7 +32,7 @@ function Header(props) {
   };
 
   const getBrand = () => {
-    let brandName = "Default Brand";
+    let brandName = "Codex - Dashboard";
     props.routes?.map((prop, key) => {
       if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
         brandName = prop.name;

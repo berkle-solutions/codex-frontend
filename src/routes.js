@@ -12,7 +12,7 @@ const allRoutes = {
   dashboard: {
     path: "/",
     name: "Dashboard",
-    icon: "nc-icon nc-bank",
+    icon: "nc-icon nc-chart-bar-32",
     component: Dashboard,
     layout: "/admin",
     show: true,
