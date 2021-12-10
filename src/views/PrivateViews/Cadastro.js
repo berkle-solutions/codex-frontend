@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import {
   Button,
@@ -34,10 +34,6 @@ export default function Cadastro() {
   const history = useHistory();
   const modalRef = useRef();
 
-  useEffect(() => {
-    handleToggleModal();
-  }, []);
-
   const handleToggleModal = () =>
     setModalProps((props) => ({ ...props, open: !props.open }));
 
@@ -55,13 +51,17 @@ export default function Cadastro() {
     }));
   };
 
-  const validarSMS = async () => {
-    try {
-      const response = await validateSMS({ pinCode, pinId: data?.pinId });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const validarSMS = async () =>
+    toast
+      .promise(validateSMS({ pinCode, pinId: data?.pinId }), {
+        pending: "Processando informações",
+        success: "Código validado com sucesso",
+        error: "Falha ao validar usuário",
+      })
+      .then(() => {
+        history.push("/admin/triagem");
+      })
+      .catch((e) => console.error(e));
 
   const enviarDadosParaAPI = async (e) => {
     e.preventDefault();
@@ -91,10 +91,9 @@ export default function Cadastro() {
           pinId,
         }));
         handleToggleModal();
-      });
+      })
+      .catch((e) => console.error(e));
   };
-
-  console.log(modalRef?.current);
 
   return (
     <>
@@ -105,9 +104,8 @@ export default function Cadastro() {
       >
         <ModalHeader toggle={handleToggleModal}>Validação</ModalHeader>
         <ModalBody>
-          Enviamos um código <strong>sms</strong> para o número{" "}
-          {data?.celular || 5511958138581}, assim que receber, por favor digite
-          abaixo:
+          Enviamos um código <strong>sms</strong> para o número {data?.celular},
+          assim que receber, por favor digite abaixo:
           <br />
           <br />
           <FormGroup>

@@ -11,7 +11,8 @@ export const authUser = async (credentials) => {
 
 export const createUser = async (newUser) => {
   try {
-    await apiService.post("/pessoa/salvar", newUser);
+    const { data } = await apiService.post("/pessoa/salvar", newUser);
+    return data;
   } catch (e) {
     throw new Error("UserService error: ", e);
   }
