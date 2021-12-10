@@ -4,12 +4,14 @@ import { setToken } from "../services/auth";
 
 const MainContextProvider = createContext({});
 
+export const INITIAL_STATE = {
+  user: {},
+  token: "",
+  refreshToken: "",
+};
+
 export const MainContext = ({ children }) => {
-  const [state, setState] = useState({
-    user: {},
-    token: "",
-    refreshToken: "",
-  });
+  const [state, setState] = useState(INITIAL_STATE);
 
   useEffect(() => {
     if (state.token) setToken(state.token);

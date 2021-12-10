@@ -7,25 +7,21 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input,
 } from "reactstrap";
+import { useMainContext } from "../../store/MainContext";
+import { logout } from "../../services/auth";
 
-import routes from "routes.js";
+import { INITIAL_STATE } from "../../store/MainContext";
 
 function Header(props) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [color, setColor] = React.useState("transparent");
   const sidebarToggle = React.useRef();
   const location = useLocation();
+
+  const { setState } = useMainContext();
+
   const toggle = () => {
     if (isOpen) {
       setColor("transparent");
@@ -34,9 +30,7 @@ function Header(props) {
     }
     setIsOpen(!isOpen);
   };
-  const dropdownToggle = (e) => {
-    setDropdownOpen(!dropdownOpen);
-  };
+
   const getBrand = () => {
     let brandName = "Default Brand";
     props.routes?.map((prop, key) => {
@@ -47,11 +41,12 @@ function Header(props) {
     });
     return brandName;
   };
+
   const openSidebar = () => {
     document.documentElement.classList.toggle("nav-open");
     sidebarToggle.current.classList.toggle("toggled");
   };
-  // function that adds color dark/transparent to the navbar on resize (this is for the collapse)
+
   const updateColor = () => {
     if (window.innerWidth < 993 && isOpen) {
       setColor("dark");
@@ -59,6 +54,7 @@ function Header(props) {
       setColor("transparent");
     }
   };
+
   React.useEffect(() => {
     window.addEventListener("resize", updateColor.bind(this));
   });
@@ -71,8 +67,13 @@ function Header(props) {
       sidebarToggle.current.classList.toggle("toggled");
     }
   }, [location]);
+
+  const handleLogout = () => {
+    logout();
+    setState(INITIAL_STATE);
+  };
+
   return (
-    // add or remove classes depending if we are on full-screen-maps page or not
     <Navbar
       color={
         props.location.pathname.indexOf("full-screen-maps") !== -1
@@ -109,47 +110,16 @@ function Header(props) {
           <span className="navbar-toggler-bar navbar-kebab" />
         </NavbarToggler>
         <Collapse isOpen={isOpen} navbar className="justify-content-end">
-          <form>
-            <InputGroup className="no-border">
-              <Input placeholder="Search..." />
-              <InputGroupAddon addonType="append">
-                <InputGroupText>
-                  <i className="nc-icon nc-zoom-split" />
-                </InputGroupText>
-              </InputGroupAddon>
-            </InputGroup>
-          </form>
           <Nav navbar>
             <NavItem>
-              <Link to="#pablo" className="nav-link btn-magnify">
-                <i className="nc-icon nc-layout-11" />
+              <Link
+                to="/"
+                className="nav-link btn-rotate"
+                onClick={handleLogout}
+              >
+                <i className="nc-icon nc-button-power" />
                 <p>
-                  <span className="d-lg-none d-md-block">Stats</span>
-                </p>
-              </Link>
-            </NavItem>
-            <Dropdown
-              nav
-              isOpen={dropdownOpen}
-              toggle={(e) => dropdownToggle(e)}
-            >
-              <DropdownToggle caret nav>
-                <i className="nc-icon nc-bell-55" />
-                <p>
-                  <span className="d-lg-none d-md-block">Some Actions</span>
-                </p>
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem tag="a">Action</DropdownItem>
-                <DropdownItem tag="a">Another Action</DropdownItem>
-                <DropdownItem tag="a">Something else here</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <NavItem>
-              <Link to="#pablo" className="nav-link btn-rotate">
-                <i className="nc-icon nc-settings-gear-65" />
-                <p>
-                  <span className="d-lg-none d-md-block">Account</span>
+                  <span className="d-lg-none d-md-block">Logout</span>
                 </p>
               </Link>
             </NavItem>
