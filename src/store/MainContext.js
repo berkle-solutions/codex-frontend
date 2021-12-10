@@ -14,7 +14,15 @@ export const INITIAL_STATE = {
 export const MainContext = ({ children }) => {
   const [state, setState] = useState(INITIAL_STATE);
 
+  // useEffect(() => {
+  //   setState((prev) => ({
+  //     ...prev,
+  //     loading: false,
+  //   }));
+  // }, []);
+
   useEffect(() => {
+    console.log("state: ", state);
     if (state.token) {
       setToken(state.token);
       setUser(state.user);
