@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import {
   Button,
@@ -12,8 +12,12 @@ import {
   Input,
   Row,
   Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
-import { createUser } from "../../services/codex";
+import { createUser, validateSMS } from "../../services/codex";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
@@ -22,8 +26,20 @@ export default function Cadastro() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState({});
   const [ehPorteiro, setEhPorteiro] = useState(false);
+  const [modalProps, setModalProps] = useState({
+    open: false,
+  });
+  const [pinCode, setPinCode] = useState(null);
 
   const history = useHistory();
+  const modalRef = useRef();
+
+  useEffect(() => {
+    handleToggleModal();
+  }, []);
+
+  const handleToggleModal = () =>
+    setModalProps((props) => ({ ...props, open: !props.open }));
 
   const handleField = (e) => {
     setData((prev) => ({
@@ -37,6 +53,14 @@ export default function Cadastro() {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const validarSMS = async () => {
+    try {
+      const response = await validateSMS({ pinCode, pinId: data?.pinId });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const enviarDadosParaAPI = async (e) => {
@@ -61,13 +85,47 @@ export default function Cadastro() {
         success: "Usuário criado com sucesso",
         error: "Falha ao criar usuário",
       })
-      .then(() => {
-        history.push("tables");
+      .then(({ pinId }) => {
+        setData((prev) => ({
+          ...prev,
+          pinId,
+        }));
+        handleToggleModal();
       });
   };
 
+  console.log(modalRef?.current);
+
   return (
     <>
+      <Modal
+        ref={modalRef}
+        toggle={handleToggleModal}
+        isOpen={modalProps?.open}
+      >
+        <ModalHeader toggle={handleToggleModal}>Validação</ModalHeader>
+        <ModalBody>
+          Enviamos um código <strong>sms</strong> para o número{" "}
+          {data?.celular || 5511958138581}, assim que receber, por favor digite
+          abaixo:
+          <br />
+          <br />
+          <FormGroup>
+            <Input
+              placeholder="Digite o código"
+              type="text"
+              onChange={(e) => setPinCode(e.target.value)}
+              name="codigo"
+            />
+          </FormGroup>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={validarSMS}>
+            Validar
+          </Button>{" "}
+          <Button onClick={handleToggleModal}>Cancelar</Button>
+        </ModalFooter>
+      </Modal>
       <div className="content">
         <Row>
           <Col>

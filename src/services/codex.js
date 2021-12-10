@@ -104,3 +104,14 @@ export const getLocalizacoes = async ({ bloco, andar }) => {
     throw new Error("LocalizacoesService error: ", e);
   }
 };
+
+export const validateSMS = async ({ pinId, pinCode }) => {
+  try {
+    await apiService.post("/pessoa/verificar/pin", {
+      pinId,
+      pinCode,
+    });
+  } catch (e) {
+    throw new Error("ValidateSMS error: ", e);
+  }
+};
