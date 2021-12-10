@@ -90,6 +90,11 @@ export default function EncomendaDetalhe() {
             armario: response?.compartimento?.armario,
           },
         }),
+        ...(response?.status_fila && {
+          status_fila: {
+            descricao: response?.status_fila?.descricao,
+          },
+        }),
       });
     } catch (e) {
       console.error(e);
@@ -225,66 +230,70 @@ export default function EncomendaDetalhe() {
               </div>
             </>
           )}
-          <hr />
-          <CardBody>
-            <Form>
-              <div className="form-row">
-                <FormGroup className="col-md-3">
-                  <Label>Estoque - Armário</Label>
-                  <Input
-                    type="select"
-                    name="armario"
-                    placeholder="Armarios"
-                    value={armario}
-                    onChange={(e) => setArmario(e.target.value)}
-                  >
-                    <option></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">4</option>
-                    <option value="3">5</option>
-                  </Input>
-                </FormGroup>
-                <FormGroup className="col-md-3">
-                  <Label>Armário - Compartimento</Label>
-                  <Input
-                    type="select"
-                    name="compartimento"
-                    placeholder="Compartimentos"
-                    value={compartimentoSelecionado}
-                    onChange={(e) =>
-                      setCompartimentoSelecionado(e.target.value)
-                    }
-                  >
-                    <option></option>
-                    {compartimentos?.map((compartimento) => {
-                      return (
-                        !compartimento?.ocupado && (
-                          <option
-                            key={compartimento.id}
-                            value={compartimento.id}
-                          >
-                            {compartimento.descricao}
-                          </option>
-                        )
-                      );
-                    })}
-                  </Input>
-                </FormGroup>
-              </div>
-              <div className="form-row">
-                <Button
-                  color="primary"
-                  type="submit"
-                  className="btn-round"
-                  onClick={salvarEncomendaCompartimento}
-                >
-                  Registrar Compartimento
-                </Button>
-              </div>
-            </Form>
-          </CardBody>
+          {!(encomenda?.status_fila?.descricao === "Retirado") && (
+            <>
+              <hr />
+              <CardBody>
+                <Form>
+                  <div className="form-row">
+                    <FormGroup className="col-md-3">
+                      <Label>Estoque - Armário</Label>
+                      <Input
+                        type="select"
+                        name="armario"
+                        placeholder="Armarios"
+                        value={armario}
+                        onChange={(e) => setArmario(e.target.value)}
+                      >
+                        <option></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="3">4</option>
+                        <option value="3">5</option>
+                      </Input>
+                    </FormGroup>
+                    <FormGroup className="col-md-3">
+                      <Label>Armário - Compartimento</Label>
+                      <Input
+                        type="select"
+                        name="compartimento"
+                        placeholder="Compartimentos"
+                        value={compartimentoSelecionado}
+                        onChange={(e) =>
+                          setCompartimentoSelecionado(e.target.value)
+                        }
+                      >
+                        <option></option>
+                        {compartimentos?.map((compartimento) => {
+                          return (
+                            !compartimento?.ocupado && (
+                              <option
+                                key={compartimento.id}
+                                value={compartimento.id}
+                              >
+                                {compartimento.descricao}
+                              </option>
+                            )
+                          );
+                        })}
+                      </Input>
+                    </FormGroup>
+                  </div>
+                  <div className="form-row">
+                    <Button
+                      color="primary"
+                      type="submit"
+                      className="btn-round"
+                      onClick={salvarEncomendaCompartimento}
+                    >
+                      Registrar Compartimento
+                    </Button>
+                  </div>
+                </Form>
+              </CardBody>
+            </>
+          )}
         </Card>
       </div>
     </>
