@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 
-import { setToken } from "../services/auth";
+import { setToken, setUser } from "../services/auth";
 
 const MainContextProvider = createContext({});
 
@@ -8,13 +8,17 @@ export const INITIAL_STATE = {
   user: {},
   token: "",
   refreshToken: "",
+  loading: true,
 };
 
 export const MainContext = ({ children }) => {
   const [state, setState] = useState(INITIAL_STATE);
 
   useEffect(() => {
-    if (state.token) setToken(state.token);
+    if (state.token) {
+      setToken(state.token);
+      setUser(state.user);
+    }
   }, [state]);
 
   return (

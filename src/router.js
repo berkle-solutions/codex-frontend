@@ -9,6 +9,25 @@ import Login from "./views/PublicViews/Login";
 export const Router = () => {
   const { state } = useMainContext();
   const isAuthenticated = state.token || getToken();
+  const isLoading = state.loading;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <img
+        alt="loading"
+        width={100}
+        height={100}
+        src={require("assets/loading.gif").default}
+      />
+    </div>
+  );
 
   return (
     <BrowserRouter>

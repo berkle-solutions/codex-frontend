@@ -17,7 +17,6 @@ import {
 
 import { authUser } from "../../services/codex";
 import { useMainContext } from "../../store/MainContext";
-
 import { toast } from "react-toastify";
 
 export default function Login() {
@@ -45,6 +44,7 @@ export default function Login() {
           user,
           token: authToken.access,
           refreshToken: authToken.refresh,
+          loading: false,
         }));
       })
       .catch(() => {});
