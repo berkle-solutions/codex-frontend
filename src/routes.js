@@ -33,7 +33,7 @@ const allRoutes = {
     icon: "nc-icon nc-badge",
     component: Cadastro,
     layout: "/admin",
-    show: false,
+    show: true,
   },
   armario: {
     path: "/armario",

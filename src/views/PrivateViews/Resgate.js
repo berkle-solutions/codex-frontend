@@ -14,24 +14,32 @@ import {
 import { rescueEncomenda } from "../../services/codex";
 import { useHistory, useParams } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 export default function Resgate() {
   const [codigoResgate, setCodigoResgate] = useState(null);
 
-  //   const history = useHistory();
+  const history = useHistory();
 
   const { id: pessoaId } = useParams();
 
   const resgatarEncomenda = async (e) => {
     e.preventDefault();
-    try {
-      const dadosEncomenda = {
-        pessoaId,
-        codigoResgate,
-      };
-      await rescueEncomenda(dadosEncomenda);
-    } catch (e) {
-      console.error(e);
-    }
+
+    const dadosEncomenda = {
+      pessoaId,
+      codigoResgate,
+    };
+
+    toast
+      .promise(rescueEncomenda(dadosEncomenda), {
+        pending: "Processando informações",
+        success: "Encomenda resgatada com sucesso",
+        error: "Código de resgate incorreto ❌",
+      })
+      .then(() => {
+        history.push("/admin/triagem");
+      });
   };
 
   return (

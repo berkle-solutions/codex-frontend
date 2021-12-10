@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import {
   Button,
   Card,
@@ -10,9 +9,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
 import { getEncomendas } from "../../services/codex";
-
 import { useHistory } from "react-router-dom";
 
 const STATUS_FILA_TYPES = {
@@ -24,7 +21,6 @@ const STATUS_FILA_TYPES = {
 
 function Triagem() {
   const [encomendas, setEncomendas] = useState([]);
-
   const history = useHistory();
 
   useEffect(() => {
