@@ -20,7 +20,7 @@ function Header(props) {
   const sidebarToggle = React.useRef();
   const location = useLocation();
 
-  const { setUserState } = useMainContext();
+  const { setState } = useMainContext();
 
   const toggle = () => {
     if (isOpen) {
@@ -70,7 +70,7 @@ function Header(props) {
 
   const handleLogout = () => {
     logout();
-    setUserState(INITIAL_STATE);
+    setState({ ...INITIAL_STATE, loading: false });
   };
 
   return (

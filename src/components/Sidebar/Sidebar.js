@@ -28,7 +28,6 @@ function Sidebar(props) {
     };
   });
 
-  console.log(props);
   return (
     <div
       className="sidebar"
