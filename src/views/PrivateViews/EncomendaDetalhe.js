@@ -201,15 +201,40 @@ export default function EncomendaDetalhe() {
           </CardBody>
           <hr />
           {encomenda?.compartimento && (
-            <>
-              <p>
-                compartimento - armario: {encomenda?.compartimento?.armario}
-              </p>
-              <p>
-                compartimento - compartimento:{" "}
-                {encomenda?.compartimento?.descricao}
-              </p>
-            </>
+            <div
+              style={{
+                padding: "15px 15px 10px 15px",
+              }}
+            >
+              <div className="form-row">
+                <p
+                  style={{
+                    fontSize: "1.0rem",
+                    marginBottom: 5,
+                    color: "#9A9A9A",
+                    paddingRight: 10,
+                  }}
+                >
+                  Armario:
+                </p>
+                {"  "}
+                <strong>{encomenda?.compartimento?.armario}</strong>
+              </div>
+              <div className="form-row">
+                <p
+                  style={{
+                    fontSize: "1.0rem",
+                    marginBottom: 5,
+                    color: "#9A9A9A",
+                    paddingRight: 10,
+                  }}
+                >
+                  Compartimento:{" "}
+                </p>
+                {"  "}
+                <strong>{encomenda?.compartimento?.descricao}</strong>
+              </div>
+            </div>
           )}
           <hr />
           <CardBody>
