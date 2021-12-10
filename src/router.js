@@ -23,8 +23,8 @@ export const Router = () => {
       >
         <img
           alt="loading"
-          width={100}
-          height={100}
+          width={50}
+          height={50}
           src={require("assets/loading.gif").default}
         />
       </div>

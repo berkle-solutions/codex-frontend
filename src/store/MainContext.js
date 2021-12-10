@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 
-import { setToken, setUser } from "../services/auth";
+import {
+  setToken,
+  setUser,
+  getToken,
+  getUserFromLocalStorage,
+} from "../services/auth";
 
 const MainContextProvider = createContext({});
 
@@ -13,16 +18,26 @@ export const INITIAL_STATE = {
 
 export const MainContext = ({ children }) => {
   const [state, setState] = useState(INITIAL_STATE);
-
-  // useEffect(() => {
-  //   setState((prev) => ({
-  //     ...prev,
-  //     loading: false,
-  //   }));
-  // }, []);
+  const hasToken = getToken();
+  const hasUser = getUserFromLocalStorage();
 
   useEffect(() => {
-    console.log("state: ", state);
+    if (hasToken && hasUser) {
+      setState((prev) => ({
+        ...prev,
+        token: hasToken,
+        user: hasUser,
+        loading: false,
+      }));
+    } else {
+      setState((prev) => ({
+        ...prev,
+        loading: false,
+      }));
+    }
+  }, []);
+
+  useEffect(() => {
     if (state.token) {
       setToken(state.token);
       setUser(state.user);
