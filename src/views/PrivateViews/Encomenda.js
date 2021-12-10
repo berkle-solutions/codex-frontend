@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 import {
   Button,
@@ -12,8 +11,9 @@ import {
   CardBody,
   Form,
 } from "reactstrap";
-
+import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { RegisterEncomenda, getLocalizacoes } from "../../services/codex";
 
 export default function Encomenda() {
   const [filter, setFilter] = useState({
@@ -40,11 +40,8 @@ export default function Encomenda() {
   useEffect(() => {
     const buscarMoradoresPorBlocoAndar = async () => {
       try {
-        const { data } = await axios.post(
-          "http://127.0.0.1:8000/api/localizacao/lista",
-          filter
-        );
-        setMoradores(data);
+        const response = await getLocalizacoes(filter);
+        setMoradores(response);
       } catch (e) {
         console.log(e);
       }
@@ -59,17 +56,20 @@ export default function Encomenda() {
 
   const cadastrarEncomenda = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://127.0.0.1:8000/api/encomenda/salvar", {
-        descricao: dadosEncomenda.descricao,
-        unidade: dadosEncomenda.unidade,
-        pessoa: moradorSelecionado?.id,
+    const encomendaData = {
+      descricao: dadosEncomenda.descricao,
+      unidade: dadosEncomenda.unidade,
+      pessoa: moradorSelecionado?.id,
+    };
+    toast
+      .promise(RegisterEncomenda(encomendaData), {
+        pending: "Processando informações",
+        success: "Encomenda cadastrada com sucesso",
+        error: "Falha ao cadastrar encomenda",
+      })
+      .then(() => {
+        history.push("/admin/triagem");
       });
-
-      history.push("/admin/triagem");
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (

@@ -35,7 +35,7 @@ export default function Resgate() {
       .promise(rescueEncomenda(dadosEncomenda), {
         pending: "Processando informações",
         success: "Encomenda resgatada com sucesso",
-        error: "Código de resgate incorreto ❌",
+        error: "Código de resgate incorreto",
       })
       .then(() => {
         history.push("/admin/triagem");

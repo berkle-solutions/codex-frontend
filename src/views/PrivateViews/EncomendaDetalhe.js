@@ -13,15 +13,14 @@ import {
 } from "reactstrap";
 import {
   getEncomendaById,
-  rescueEncomenda,
   getAllCompartimentosDisponiveis,
   saveEncomendaEstoque,
   saveEncomendaCompartimento,
 } from "../../services/codex";
+import { toast } from "react-toastify";
 import { useHistory, useParams } from "react-router-dom";
 
 export default function EncomendaDetalhe() {
-  const [codigoResgate, setCodigoResgate] = useState(null);
   const [armario, setArmario] = useState(null);
   const [compartimentos, setCompartimentos] = useState([]);
   const [compartimentoSelecionado, setCompartimentoSelecionado] =
@@ -46,6 +45,7 @@ export default function EncomendaDetalhe() {
   });
 
   const history = useHistory();
+
   const { id: encomendaId } = useParams();
 
   useEffect(() => {
@@ -109,21 +109,21 @@ export default function EncomendaDetalhe() {
         ocupado: true,
       };
 
-      await saveEncomendaEstoque(encomendaEstoqueData);
-      await saveEncomendaCompartimento(encomendaCompartimentoData);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const resgatarEncomenda = async (e) => {
-    e.preventDefault();
-    try {
-      const dadosEncomenda = {
-        pessoa: encomenda.morador.id,
-        codigo_resgate: encomenda.encomenda.codigo_resgate,
-      };
-      await rescueEncomenda(dadosEncomenda);
+      toast
+        .promise(
+          Promise.all([
+            saveEncomendaEstoque(encomendaEstoqueData),
+            saveEncomendaCompartimento(encomendaCompartimentoData),
+          ]),
+          {
+            pending: "Processando informações",
+            success: "Registro em estoque com sucesso",
+            error: "Falha ao registar no estoque",
+          }
+        )
+        .then(() => {
+          history.push("/admin/triagem");
+        });
     } catch (e) {
       console.error(e);
     }
@@ -184,55 +184,46 @@ export default function EncomendaDetalhe() {
                   </Input>
                 </FormGroup>
               </div>
-              {/* <div className="form-row">
-                <FormGroup className="col-md-3 col-sm-12">
-                  <Label>Código de Resgate</Label>
-                  <Input
-                    type="text"
-                    name="descricaoEncomenda"
-                    value={codigoResgate}
-                    onChange={(e) => setCodigoResgate(e.target.value)}
-                  />
-                </FormGroup>
-              </div> */}
             </Form>
           </CardBody>
-          <hr />
           {encomenda?.compartimento && (
-            <div
-              style={{
-                padding: "15px 15px 10px 15px",
-              }}
-            >
-              <div className="form-row">
-                <p
-                  style={{
-                    fontSize: "1.0rem",
-                    marginBottom: 5,
-                    color: "#9A9A9A",
-                    paddingRight: 10,
-                  }}
-                >
-                  Armario:
-                </p>
-                {"  "}
-                <strong>{encomenda?.compartimento?.armario}</strong>
+            <>
+              <hr />
+              <div
+                style={{
+                  padding: "15px 15px 10px 15px",
+                }}
+              >
+                <div className="form-row">
+                  <p
+                    style={{
+                      fontSize: "1.0rem",
+                      marginBottom: 5,
+                      color: "#9A9A9A",
+                      paddingRight: 10,
+                    }}
+                  >
+                    Armario:
+                  </p>
+                  {"  "}
+                  <strong>{encomenda?.compartimento?.armario}</strong>
+                </div>
+                <div className="form-row">
+                  <p
+                    style={{
+                      fontSize: "1.0rem",
+                      marginBottom: 5,
+                      color: "#9A9A9A",
+                      paddingRight: 10,
+                    }}
+                  >
+                    Compartimento:{" "}
+                  </p>
+                  {"  "}
+                  <strong>{encomenda?.compartimento?.descricao}</strong>
+                </div>
               </div>
-              <div className="form-row">
-                <p
-                  style={{
-                    fontSize: "1.0rem",
-                    marginBottom: 5,
-                    color: "#9A9A9A",
-                    paddingRight: 10,
-                  }}
-                >
-                  Compartimento:{" "}
-                </p>
-                {"  "}
-                <strong>{encomenda?.compartimento?.descricao}</strong>
-              </div>
-            </div>
+            </>
           )}
           <hr />
           <CardBody>
@@ -292,18 +283,6 @@ export default function EncomendaDetalhe() {
                   Registrar Compartimento
                 </Button>
               </div>
-
-              {/* <div className="form-row">
-                <FormGroup className="col-md-3 col-sm-12">
-                  <Label>Código de Resgate</Label>
-                  <Input
-                    type="text"
-                    name="descricaoEncomenda"
-                    value={codigoResgate}
-                    onChange={(e) => setCodigoResgate(e.target.value)}
-                  />
-                </FormGroup>
-              </div> */}
             </Form>
           </CardBody>
         </Card>

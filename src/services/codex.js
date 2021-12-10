@@ -9,6 +9,14 @@ export const authUser = async (credentials) => {
   }
 };
 
+export const createUser = async (newUser) => {
+  try {
+    await apiService.post("/pessoa/salvar", newUser);
+  } catch (e) {
+    throw new Error("UserService error: ", e);
+  }
+};
+
 export const getEncomendas = async () => {
   try {
     const { data } = await apiService.get("/encomenda/lista");
@@ -24,6 +32,18 @@ export const getEncomendaById = async (encomendaId) => {
     return data;
   } catch (e) {
     throw new Error("EncomendaByIdService error: ", e);
+  }
+};
+
+export const RegisterEncomenda = async ({ descricao, unidade, pessoa }) => {
+  try {
+    await apiService.post("/encomenda/salvar", {
+      descricao,
+      unidade,
+      pessoa,
+    });
+  } catch (e) {
+    throw new Error("EncomendaRegister error: ", e);
   }
 };
 
@@ -70,5 +90,17 @@ export const saveEncomendaCompartimento = async ({ id, ...compartimento }) => {
     });
   } catch (e) {
     throw new Error("EncomendaCompartimentoService error: ", e);
+  }
+};
+
+export const getLocalizacoes = async ({ bloco, andar }) => {
+  try {
+    const { data } = await apiService.post("/localizacao/lista", {
+      bloco,
+      andar,
+    });
+    return data;
+  } catch (e) {
+    throw new Error("LocalizacoesService error: ", e);
   }
 };

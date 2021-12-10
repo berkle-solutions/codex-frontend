@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import {
   Button,
@@ -14,9 +13,9 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
+import { createUser } from "../../services/codex";
 import { format } from "date-fns";
-
+import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 export default function Cadastro() {
@@ -50,28 +49,29 @@ export default function Cadastro() {
 
   const enviarDadosParaAPI = async (e) => {
     e.preventDefault();
-    try {
-      let newData = { ...data };
 
-      const dataFormatada = new Date(
-        format(
-          new Date(newData?.data_nascimento),
-          "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
-        )
-      ).toISOString();
+    let newData = { ...data };
 
-      newData.perfil = parseInt(data.perfil);
-      newData.data_nascimento = dataFormatada;
+    const dataFormatada = new Date(
+      format(new Date(newData?.data_nascimento), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
+    ).toISOString();
 
-      if (newData.perfil === 4) {
-        newData = { ...newData, localizacao: { ...location } };
-      }
+    newData.perfil = parseInt(data.perfil);
+    newData.data_nascimento = dataFormatada;
 
-      await axios.post("http://127.0.0.1:8000/api/pessoa/salvar", newData);
-      history.push("tables");
-    } catch (e) {
-      console.log(e);
+    if (newData.perfil === 4) {
+      newData = { ...newData, localizacao: { ...location } };
     }
+
+    toast
+      .promise(createUser(newData), {
+        pending: "Processando informações",
+        success: "Usuário criado com sucesso",
+        error: "Falha ao criar usuário",
+      })
+      .then(() => {
+        history.push("tables");
+      });
   };
 
   return (
@@ -181,6 +181,7 @@ export default function Cadastro() {
                           onChange={handleRegistrarLocalizacao}
                           name="bloco"
                           placeholder="A"
+                          required
                         />
                       </FormGroup>
                       <FormGroup className="col-md-4">
@@ -190,6 +191,7 @@ export default function Cadastro() {
                           onChange={handleRegistrarLocalizacao}
                           name="andar"
                           placeholder="10"
+                          required
                         />
                       </FormGroup>
                       <FormGroup className="col-md-4">
@@ -199,6 +201,7 @@ export default function Cadastro() {
                           onChange={handleRegistrarLocalizacao}
                           name="unidade"
                           placeholder="315"
+                          required
                         />
                       </FormGroup>
                     </Row>

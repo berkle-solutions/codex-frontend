@@ -37,7 +37,7 @@ export default function Login() {
       .promise(authUser(credentials), {
         pending: "Processando informações",
         success: "Usuário autenticado com sucesso",
-        error: "Falha na autenticação ❌",
+        error: "Falha na autenticação",
       })
       .then(({ user, authToken }) => {
         setState((prev) => ({
