@@ -17,7 +17,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
-import { createUser, validateSMS } from "../../services/codex";
+import { createUser, validateSMS, resendTokenPIN } from "../../services/codex";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
@@ -60,6 +60,15 @@ export default function Cadastro() {
       })
       .then(() => {
         history.push("/admin/triagem");
+      })
+      .catch((e) => console.error(e));
+
+  const reenviarSMS = () =>
+    toast
+      .promise(resendTokenPIN(data?.pinId), {
+        pending: "Processando informações",
+        success: "SMS Reenviado com sucesso",
+        error: "Falha ao reenviar token",
       })
       .catch((e) => console.error(e));
 
@@ -118,6 +127,9 @@ export default function Cadastro() {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
+          <Button color="warning" onClick={reenviarSMS}>
+            Reenviar
+          </Button>
           <Button color="primary" onClick={validarSMS}>
             Validar
           </Button>{" "}

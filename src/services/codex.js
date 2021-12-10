@@ -116,3 +116,13 @@ export const validateSMS = async ({ pinId, pinCode }) => {
     throw new Error("ValidateSMS error: ", e);
   }
 };
+
+export const resendTokenPIN = async (pinId) => {
+  try {
+    await apiService.post("/pessoa/verificar/pin/resend", {
+      pin_id: pinId,
+    });
+  } catch (e) {
+    throw new Error("ResendTokenService error: ", e);
+  }
+};
