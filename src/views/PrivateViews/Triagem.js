@@ -32,7 +32,7 @@ function Triagem() {
       const response = await getEncomendas();
       setEncomendas(response);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

@@ -43,7 +43,7 @@ export default function Encomenda() {
         const response = await getLocalizacoes(filter);
         setMoradores(response);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
 

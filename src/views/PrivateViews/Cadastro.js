@@ -39,14 +39,6 @@ export default function Cadastro() {
     }));
   };
 
-  const checarSeEhMorador = (e) => {
-    if (e.target.value === "4") {
-      setEhPorteiro(true);
-    } else {
-      setEhPorteiro(false);
-    }
-  };
-
   const enviarDadosParaAPI = async (e) => {
     e.preventDefault();
 
@@ -159,7 +151,7 @@ export default function Cadastro() {
                           type="select"
                           onChange={(e) => {
                             handleField(e);
-                            checarSeEhMorador(e);
+                            setEhPorteiro(e.target.value === "4");
                           }}
                         >
                           <option></option>
