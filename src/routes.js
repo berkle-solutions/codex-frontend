@@ -14,6 +14,7 @@ import Encomenda from "views/PrivateViews/Encomenda";
 import EncomendaDetalhe from "views/PrivateViews/EncomendaDetalhe";
 import Triagem from "views/PrivateViews/Triagem";
 import Estoque from "views/PrivateViews/Estoque";
+import Resgate from "views/PrivateViews/Resgate";
 
 import { userRoutesAccess } from "./variables/enums";
 
@@ -68,11 +69,19 @@ const allRoutes = {
   },
   triagem: {
     path: "/triagem",
-    name: " Lista de Encomendas",
+    name: "Lista de Encomendas",
     icon: "nc-icon nc-tile-56",
     component: Triagem,
     layout: "/admin",
     show: true,
+  },
+  resgate: {
+    path: "/encomenda/resgate/:id",
+    name: "Resgate de encomenda",
+    icon: "nc-icon nc-tile-56",
+    component: Resgate,
+    layout: "/admin",
+    show: false,
   },
 };
 

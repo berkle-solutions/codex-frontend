@@ -129,8 +129,6 @@ export default function EncomendaDetalhe() {
     }
   };
 
-  console.log(encomenda);
-
   return (
     <>
       <div className="content">

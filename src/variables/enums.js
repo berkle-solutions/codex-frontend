@@ -12,6 +12,7 @@ export const userRoutesAccess = {
     "estoque",
     "encomenda",
     "encomenda_detalhe",
+    "resgate",
     "triagem",
   ],
   [userTypes.PORTEIRO]: [

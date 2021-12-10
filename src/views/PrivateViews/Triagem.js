@@ -45,7 +45,9 @@ function Triagem() {
     history.push(`/admin/encomenda/detalhe/${id}`);
   };
 
-  console.log(encomendas);
+  const goToRescueEncomenda = (id) => {
+    history.push(`/admin/encomenda/resgate/${id}`);
+  };
 
   return (
     <>
@@ -65,6 +67,7 @@ function Triagem() {
                       <th>Morador</th>
                       <th>Status</th>
                       <th className="text-right">Detalhe</th>
+                      <th className="text-right">Resgatar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -90,6 +93,22 @@ function Triagem() {
                             onClick={() => goToEncomendaDetail(encomenda?.id)}
                           >
                             Ver mais
+                          </Button>
+                        </td>
+                        <td className="text-right">
+                          <Button
+                            color="success"
+                            onClick={() =>
+                              goToRescueEncomenda(encomenda?.pessoa?.id)
+                            }
+                            disabled={
+                              !(
+                                encomenda?.status_fila?.descricao ===
+                                "Em Estoque"
+                              )
+                            }
+                          >
+                            Resgatar
                           </Button>
                         </td>
                       </tr>
