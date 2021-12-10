@@ -13,7 +13,6 @@ import Armario from "views/PrivateViews/Armario";
 import Encomenda from "views/PrivateViews/Encomenda";
 import EncomendaDetalhe from "views/PrivateViews/EncomendaDetalhe";
 import Triagem from "views/PrivateViews/Triagem";
-import Estoque from "views/PrivateViews/Estoque";
 import Resgate from "views/PrivateViews/Resgate";
 
 import { userRoutesAccess } from "./variables/enums";
@@ -58,14 +57,6 @@ const allRoutes = {
     component: EncomendaDetalhe,
     layout: "/admin",
     show: false,
-  },
-  estoque: {
-    path: "/estoque",
-    name: "Cadastro Estoque",
-    icon: "nc-icon nc-bag-16",
-    component: Estoque,
-    layout: "/admin",
-    show: true,
   },
   triagem: {
     path: "/triagem",
