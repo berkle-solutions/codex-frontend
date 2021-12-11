@@ -16,6 +16,7 @@ import {
   getAllCompartimentosDisponiveis,
   saveEncomendaEstoque,
   saveEncomendaCompartimento,
+  notificarMoradorMessage,
 } from "../../services/codex";
 import { toast } from "react-toastify";
 import { useHistory, useParams } from "react-router-dom";
@@ -132,6 +133,17 @@ export default function EncomendaDetalhe() {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const notificarMoradorWpp = async (e) => {
+    e.preventDefault();
+    toast
+      .promise(notificarMoradorMessage(encomenda?.morador?.celular), {
+        pending: "Processando informações",
+        success: "Morador Notificado com sucesso",
+        error: "Falha notificar morador",
+      })
+      .catch((e) => console.error(e));
   };
 
   return (
@@ -280,7 +292,12 @@ export default function EncomendaDetalhe() {
                       </Input>
                     </FormGroup>
                   </div>
-                  <div className="form-row">
+                  <div
+                    className="form-row"
+                    style={{
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <Button
                       color="primary"
                       type="submit"
@@ -288,6 +305,14 @@ export default function EncomendaDetalhe() {
                       onClick={salvarEncomendaCompartimento}
                     >
                       Registrar Compartimento
+                    </Button>
+                    <Button
+                      color="warning"
+                      type="submit"
+                      className="btn-round"
+                      onClick={notificarMoradorWpp}
+                    >
+                      Notificar Morador
                     </Button>
                   </div>
                 </Form>

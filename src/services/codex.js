@@ -134,3 +134,13 @@ export const registerArmario = async (data) => {
     throw new Error("RegisterArmarioService error: ", e);
   }
 };
+
+export const notificarMoradorMessage = async (phone) => {
+  try {
+    await apiService.post("/notificacao/enviar/whatsapp", {
+      phone,
+    });
+  } catch (e) {
+    throw new Error("NotificarMoradorService error: ", e);
+  }
+};
