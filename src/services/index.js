@@ -2,7 +2,10 @@ import axios from "axios";
 import { getToken } from "./auth";
 
 const apiService = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://127.0.0.1:8000/api"
+      : "https://codex-backend-tcc.herokuapp.com/",
 });
 
 apiService.interceptors.request.use(async (config) => {
