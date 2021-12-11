@@ -5,7 +5,7 @@ const apiService = axios.create({
   baseURL:
     process.env.NODE_ENV === "development"
       ? "http://127.0.0.1:8000/api"
-      : "https://codex-backend-tcc.herokuapp.com/",
+      : "https://codex-backend-tcc.herokuapp.com/api",
 });
 
 apiService.interceptors.request.use(async (config) => {
