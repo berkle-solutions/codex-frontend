@@ -56,11 +56,13 @@ export default function Encomenda() {
 
   const cadastrarEncomenda = async (e) => {
     e.preventDefault();
+
     const encomendaData = {
       descricao: dadosEncomenda.descricao,
       unidade: dadosEncomenda.unidade,
-      pessoa: moradorSelecionado?.id,
+      pessoa: moradorSelecionado?.pessoa?.id,
     };
+
     toast
       .promise(RegisterEncomenda(encomendaData), {
         pending: "Processando informações",
@@ -121,12 +123,12 @@ export default function Encomenda() {
                   </Input>
                 </FormGroup>
                 <FormGroup className="col-md-4">
-                  <Label>Nº Apartamento</Label>
+                  <Label>Morador</Label>
                   <Input
                     type="select"
                     onChange={handleMoradorSelecionado}
                     name="unidade"
-                    placeholder="Nº Apartamento"
+                    placeholder="Morador"
                   >
                     <option></option>
                     {moradores?.map((morador) => (
