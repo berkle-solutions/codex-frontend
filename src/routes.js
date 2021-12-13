@@ -1,129 +1,74 @@
-/*!
+import Dashboard from "views/PrivateViews/Dashboard.js";
+import Cadastro from "views/PrivateViews/Cadastro.js";
+import Armario from "views/PrivateViews/Armario";
+import Encomenda from "views/PrivateViews/Encomenda";
+import EncomendaDetalhe from "views/PrivateViews/EncomendaDetalhe";
+import Triagem from "views/PrivateViews/Triagem";
+import Resgate from "views/PrivateViews/Resgate";
 
-=========================================================
-* Paper Dashboard React - v1.3.0
-=========================================================
+import { userRoutesAccess } from "./variables/enums";
 
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/main/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import Dashboard from "views/Dashboard.js";
-import Notifications from "views/Notifications.js";
-import Icons from "views/Icons.js";
-import Typography from "views/Typography.js";
-import TableList from "views/Tables.js";
-import Maps from "views/Map.js";
-import UserPage from "views/User.js";
-// adicionar aqui o caminho até a view
-import Cadastro from "views/Cadastro.js";
-import Login from "views/Login.js";
-import Exemplo from "views/Exemplo";
-import Armario from "views/Armario";
-import Encomenda from "views/Encomenda";
-import Triagem from "views/Triagem";
-//import { Table } from "reactstrap";
-
-var routes = [
-  {
-    path: "/dashboard",
+const allRoutes = {
+  dashboard: {
+    path: "/",
     name: "Dashboard",
-    icon: "nc-icon nc-bank",
+    icon: "nc-icon nc-chart-bar-32",
     component: Dashboard,
     layout: "/admin",
+    show: true,
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-diamond",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/admin",
-  },
-  {
-    path: "/user-page",
-    name: "User Profile",
-    icon: "nc-icon nc-single-02",
-    component: UserPage,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Lista Encomendas",
-    icon: "nc-icon nc-tile-56",
-    component: TableList,
-    layout: "/admin",
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-caps-small",
-    component: Typography,
-    layout: "/admin",
-  },
-  // adicionar aqui em baixo em ordem as novas telas
-  {
+  cadastro: {
     path: "/cadastro",
     name: "Cadastro de Pessoas",
     icon: "nc-icon nc-badge",
     component: Cadastro,
     layout: "/admin",
+    show: true,
   },
-  {
-    path: "/login",
-    name: "Login",
-    icon: "nc-icon nc-lock-circle-open",
-    component: Login,
-    layout: "/admin",
-  },
-  {
-    path: "/exemplo",
-    name: "Exemplo",
-    icon: "nc-icon nc-caps-small",
-    component: Exemplo,
-    layout: "/admin",
-  },
-  {
+  armario: {
     path: "/armario",
     name: "Armario",
     icon: "nc-icon nc-box",
     component: Armario,
     layout: "/admin",
+    show: true,
   },
-  {
+  encomenda: {
     path: "/encomenda",
-    name: "Encomenda",
+    name: "Cadastro Encomendas",
     icon: "nc-icon nc-bag-16",
     component: Encomenda,
     layout: "/admin",
+    show: true,
   },
-  {
+  encomenda_detalhe: {
+    path: "/encomenda/detalhe/:id",
+    name: "Detalhe Encomendas",
+    icon: "nc-icon nc-bag-16",
+    component: EncomendaDetalhe,
+    layout: "/admin",
+    show: false,
+  },
+  triagem: {
     path: "/triagem",
-    name: " Triagem",
+    name: "Lista de Encomendas",
     icon: "nc-icon nc-tile-56",
     component: Triagem,
     layout: "/admin",
+    show: true,
   },
+  resgate: {
+    path: "/encomenda/resgate/:id",
+    name: "Resgate de encomenda",
+    icon: "nc-icon nc-tile-56",
+    component: Resgate,
+    layout: "/admin",
+    show: false,
+  },
+};
+
+const routes = (userRole) => [
+  ...userRoutesAccess[userRole]?.map((route) => allRoutes[route]),
 ];
+
 export default routes;

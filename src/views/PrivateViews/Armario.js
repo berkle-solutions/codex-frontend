@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -13,11 +12,12 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { registerArmario } from "../../services/codex";
+import { useHistory } from "react-router-dom";
 
-
-// alterar nome exemplo para o nome da tela, exemplo: CadastroX
-export default function Login() {
+export default function Armario() {
   const [data, setData] = useState({});
+  const history = useHistory();
 
   const handleField = (e) => {
     setData((prev) => ({
@@ -28,22 +28,15 @@ export default function Login() {
 
   const enviarDadosParaAPI = async (e) => {
     e.preventDefault();
-    try {
-      const newData = { ...data };
-      newData.senha = "1234";
-      newData.data_nascimento = "2012-09-04 06:00:00.000000-08:00";
-      newData.perfil = 6;
-      newData.ativo = 1;
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/encomenda/salvar",
-        newData
-      );
-
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
+    toast
+      .promise(registerArmario(data), {
+        pending: "Processando informações",
+        success: "Armario cadastrado com sucesso",
+        error: "Falha ao cadastrar armario",
+      })
+      .then(() => history.push("/admin/triagem"))
+      .catch((e) => console.error(e));
   };
   return (
     <>
@@ -52,27 +45,42 @@ export default function Login() {
           <Col>
             <Card className="card-user">
               <CardHeader>
-                <CardTitle tag="h5">Login</CardTitle>
+                <CardTitle tag="h5">Cadastro de Armário</CardTitle>
               </CardHeader>
               <CardBody>
                 <Form>
                   <Row>
-                  <Col className="pr-1" md="5">
+                    <Col className="pr-1" md="6">
                       <FormGroup>
-                        <label>Usuário</label>
+                        <label>Identificação</label>
                         <Input
+                          placeholder="Nome do Armário"
                           type="text"
-                          name="usuario"
+                          name="nomeArmario"
                           onChange={handleField}
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pr-1" md="5">
+                    <Col className="px-1" md="3">
                       <FormGroup>
-                        <label>Senha</label>
+                        <label>Nº Armário</label>
                         <Input
-                          type="password"
-                          name="senha"
+                          placeholder="Nº Armário"
+                          type="text"
+                          name="nArmario"
+                          onChange={handleField}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <FormGroup>
+                        <label>Descrição</label>
+                        <Input
+                          type="textarea"
+                          placeholder="Detalhes do Armário"
+                          name="descricaoArmario"
                           onChange={handleField}
                         />
                       </FormGroup>
@@ -82,11 +90,11 @@ export default function Login() {
                     <div className="update ml-auto mr-auto">
                       <Button
                         className="btn-round"
-                        onClick={enviarDadosParaAPI}
                         color="primary"
                         type="submit"
+                        onClick={enviarDadosParaAPI}
                       >
-                        Entrar
+                        Atualiza Cadastro
                       </Button>
                     </div>
                   </Row>

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
-// reactstrap components
 import {
   Button,
   FormGroup,
@@ -13,6 +11,9 @@ import {
   CardBody,
   Form,
 } from "reactstrap";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { RegisterEncomenda, getLocalizacoes } from "../../services/codex";
 
 export default function Encomenda() {
   const [filter, setFilter] = useState({
@@ -24,7 +25,10 @@ export default function Encomenda() {
   const [moradorSelecionado, setMoradorSelecionado] = useState(null);
   const [dadosEncomenda, setDadosEncomenda] = useState({
     descricao: null,
+    unidade: null,
   });
+
+  const history = useHistory();
 
   const handleFilter = (e) => {
     setFilter((prev) => ({
@@ -36,13 +40,10 @@ export default function Encomenda() {
   useEffect(() => {
     const buscarMoradoresPorBlocoAndar = async () => {
       try {
-        const { data } = await axios.post(
-          "http://127.0.0.1:8000/api/localizacao/lista",
-          filter
-        );
-        setMoradores(data);
+        const response = await getLocalizacoes(filter);
+        setMoradores(response);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
 
@@ -55,14 +56,22 @@ export default function Encomenda() {
 
   const cadastrarEncomenda = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://127.0.0.1:8000/api/encomenda/salvar", {
-        descricao: dadosEncomenda,
-        pessoa: moradorSelecionado?.id,
+
+    const encomendaData = {
+      descricao: dadosEncomenda.descricao,
+      unidade: dadosEncomenda.unidade,
+      pessoa: moradorSelecionado?.pessoa?.id,
+    };
+
+    toast
+      .promise(RegisterEncomenda(encomendaData), {
+        pending: "Processando informações",
+        success: "Encomenda cadastrada com sucesso",
+        error: "Falha ao cadastrar encomenda",
+      })
+      .then(() => {
+        history.push("/admin/triagem");
       });
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (
@@ -114,12 +123,12 @@ export default function Encomenda() {
                   </Input>
                 </FormGroup>
                 <FormGroup className="col-md-4">
-                  <Label>Nº Apartamento</Label>
+                  <Label>Morador</Label>
                   <Input
                     type="select"
                     onChange={handleMoradorSelecionado}
                     name="unidade"
-                    placeholder="Nº Apartamento"
+                    placeholder="Morador"
                   >
                     <option></option>
                     {moradores?.map((morador) => (
@@ -149,7 +158,6 @@ export default function Encomenda() {
                     value={moradorSelecionado?.pessoa?.celular}
                   />
                 </FormGroup>
-                
               </div>
               <div className="form-row">
                 <FormGroup className="col-md-6">
@@ -165,50 +173,24 @@ export default function Encomenda() {
                     name="descricaoEncomenda"
                   />
                 </FormGroup>
-              </div>
-            </Form>
-          </CardBody>              
-          <CardHeader>
-            <CardTitle tag="h5">Cadastro no Estoque (Armazenamento)</CardTitle>
-          </CardHeader>
-          <CardBody>
-            <Form>            
-              <div className="form-row">
-                <FormGroup className="col-md-3">
-                  <Label>Estoque - Armário</Label>
+                <FormGroup className="col-md-3 col-sm-12">
+                  <Label>Qtd. Unidades</Label>
                   <Input
-                    type="text"
-                    disabled
-                    name="estoqueArmario"
-                    value={moradorSelecionado?.pessoa?.celular}
-                  />
-                </FormGroup>
-                <FormGroup className="col-md-3">
-                  <Label>Armário - Compartimento</Label>
-                  <Input
-                    type="text"
-                    disabled
-                    name="armarioCompartimento"
-                    value={moradorSelecionado?.pessoa?.celular}
-                  />
-                </FormGroup>
-              </div>
-            </Form>
-          </CardBody>
-          <CardHeader>
-            <CardTitle tag="h5">Entrega da Encomenda (Retirada)</CardTitle>
-          </CardHeader>
-          <CardBody>
-            <Form>   
-              <div className="form-row">
-                <FormGroup className="col-md-3">
-                  <Label>Código de Resgate</Label>
-                  <Input
-                    type="text"
-                    disabled
-                    name="codigoresgate"
-                    value={moradorSelecionado?.pessoa?.celular}
-                  />
+                    type="select"
+                    onChange={(e) => {
+                      setDadosEncomenda((prev) => ({
+                        ...prev,
+                        [e.target.name]: e.target.value,
+                      }));
+                    }}
+                    name="unidade"
+                    placeholder="Unidades"
+                  >
+                    <option></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </Input>
                 </FormGroup>
               </div>
               <Button

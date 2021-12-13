@@ -1,28 +1,10 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.3.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/main/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import logo from "logo.svg";
+import logo from "codex_logo.png";
 
 var ps;
 
@@ -45,49 +27,50 @@ function Sidebar(props) {
       }
     };
   });
+
   return (
     <div
       className="sidebar"
       data-color={props.bgColor}
       data-active-color={props.activeColor}
     >
-      <div className="logo">
-        <a
-          href="https://www.creative-tim.com"
-          className="simple-text logo-mini"
-        >
+      <div
+        className="logo"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <a href="https://codex.com.br">
           <div className="logo-img">
-            <img src={logo} alt="react-logo" />
+            <img
+              src={logo}
+              alt="react-logo"
+              style={{
+                width: 90,
+                height: 45,
+              }}
+            />
           </div>
-        </a>
-        <a
-          href="https://www.creative-tim.com"
-          className="simple-text logo-normal"
-        >
-          Creative Tim
         </a>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
-          {props.routes.map((prop, key) => {
-            return (
-              <li
-                className={
-                  activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
-                }
-                key={key}
-              >
-                <NavLink
-                  to={prop.layout + prop.path}
-                  className="nav-link"
-                  activeClassName="active"
-                >
-                  <i className={prop.icon} />
-                  <p>{prop.name}</p>
-                </NavLink>
-              </li>
-            );
-          })}
+          {props.routes?.map(
+            (prop, key) =>
+              prop?.show && (
+                <li className={activeRoute(prop.path)} key={key}>
+                  <NavLink
+                    to={prop.layout + prop.path}
+                    className="nav-link"
+                    activeClassName="active"
+                  >
+                    <i className={prop.icon} />
+                    <p>{prop.name}</p>
+                  </NavLink>
+                </li>
+              )
+          )}
         </Nav>
       </div>
     </div>

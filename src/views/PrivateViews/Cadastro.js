@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useRef } from "react";
 
 import {
   Button,
@@ -13,18 +12,30 @@ import {
   Input,
   Row,
   Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
-
+import { createUser, validateSMS, resendTokenPIN } from "../../services/codex";
 import { format } from "date-fns";
-
+import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 export default function Cadastro() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState({});
   const [ehPorteiro, setEhPorteiro] = useState(false);
+  const [modalProps, setModalProps] = useState({
+    open: false,
+  });
+  const [pinCode, setPinCode] = useState(null);
 
   const history = useHistory();
+  const modalRef = useRef();
+
+  const handleToggleModal = () =>
+    setModalProps((props) => ({ ...props, open: !props.open }));
 
   const handleField = (e) => {
     setData((prev) => ({
@@ -40,42 +51,91 @@ export default function Cadastro() {
     }));
   };
 
-  const checarSeEhMorador = (e) => {
-    if (e.target.value === "4") {
-      setEhPorteiro(true);
-    } else {
-      setEhPorteiro(false);
-    }
-  };
+  const validarSMS = async () =>
+    toast
+      .promise(validateSMS({ pinCode, pinId: data?.pinId }), {
+        pending: "Processando informações",
+        success: "Código validado com sucesso",
+        error: "Falha ao validar usuário",
+      })
+      .then(() => {
+        history.push("/admin/triagem");
+      })
+      .catch((e) => console.error(e));
+
+  const reenviarSMS = () =>
+    toast
+      .promise(resendTokenPIN(data?.pinId), {
+        pending: "Processando informações",
+        success: "SMS Reenviado com sucesso",
+        error: "Falha ao reenviar token",
+      })
+      .catch((e) => console.error(e));
 
   const enviarDadosParaAPI = async (e) => {
     e.preventDefault();
-    try {
-      let newData = { ...data };
 
-      const dataFormatada = new Date(
-        format(
-          new Date(newData?.data_nascimento),
-          "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
-        )
-      ).toISOString();
+    let newData = { ...data };
 
-      newData.perfil = parseInt(data.perfil);
-      newData.data_nascimento = dataFormatada;
+    const dataFormatada = new Date(
+      format(new Date(newData?.data_nascimento), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
+    ).toISOString();
 
-      if (newData.perfil === 4) {
-        newData = { ...newData, localizacao: { ...location } };
-      }
+    newData.perfil = parseInt(data.perfil);
+    newData.data_nascimento = dataFormatada;
 
-      await axios.post("http://127.0.0.1:8000/api/pessoa/salvar", newData);
-      history.push("tables");
-    } catch (e) {
-      console.log(e);
+    if (newData.perfil === 4) {
+      newData = { ...newData, localizacao: { ...location } };
     }
+
+    toast
+      .promise(createUser(newData), {
+        pending: "Processando informações",
+        success: "Usuário criado com sucesso",
+        error: "Falha ao criar usuário",
+      })
+      .then(({ pinId }) => {
+        setData((prev) => ({
+          ...prev,
+          pinId,
+        }));
+        handleToggleModal();
+      })
+      .catch((e) => console.error(e));
   };
 
   return (
     <>
+      <Modal
+        ref={modalRef}
+        toggle={handleToggleModal}
+        isOpen={modalProps?.open}
+      >
+        <ModalHeader toggle={handleToggleModal}>Validação</ModalHeader>
+        <ModalBody>
+          Enviamos um código <strong>sms</strong> para o número {data?.celular},
+          assim que receber, por favor digite abaixo:
+          <br />
+          <br />
+          <FormGroup>
+            <Input
+              placeholder="Digite o código"
+              type="text"
+              onChange={(e) => setPinCode(e.target.value)}
+              name="codigo"
+            />
+          </FormGroup>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="warning" onClick={reenviarSMS}>
+            Reenviar
+          </Button>
+          <Button color="primary" onClick={validarSMS}>
+            Validar
+          </Button>{" "}
+          <Button onClick={handleToggleModal}>Cancelar</Button>
+        </ModalFooter>
+      </Modal>
       <div className="content">
         <Row>
           <Col>
@@ -159,7 +219,7 @@ export default function Cadastro() {
                           type="select"
                           onChange={(e) => {
                             handleField(e);
-                            checarSeEhMorador(e);
+                            setEhPorteiro(e.target.value === "4");
                           }}
                         >
                           <option></option>
@@ -181,6 +241,7 @@ export default function Cadastro() {
                           onChange={handleRegistrarLocalizacao}
                           name="bloco"
                           placeholder="A"
+                          required
                         />
                       </FormGroup>
                       <FormGroup className="col-md-4">
@@ -190,6 +251,7 @@ export default function Cadastro() {
                           onChange={handleRegistrarLocalizacao}
                           name="andar"
                           placeholder="10"
+                          required
                         />
                       </FormGroup>
                       <FormGroup className="col-md-4">
@@ -199,6 +261,7 @@ export default function Cadastro() {
                           onChange={handleRegistrarLocalizacao}
                           name="unidade"
                           placeholder="315"
+                          required
                         />
                       </FormGroup>
                     </Row>
