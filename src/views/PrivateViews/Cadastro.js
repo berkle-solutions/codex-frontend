@@ -237,30 +237,49 @@ export default function Cadastro() {
                       <FormGroup className="col-md-4">
                         <Label>Bloco</Label>
                         <Input
-                          type="text"
+                          type="select"
                           onChange={handleRegistrarLocalizacao}
                           name="bloco"
                           placeholder="A"
                           required
-                        />
+                        >
+                          <option></option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                          <option value="D">D</option>
+                        </Input>
                       </FormGroup>
                       <FormGroup className="col-md-4">
                         <Label>Andar</Label>
                         <Input
-                          type="text"
+                          type="select"
                           onChange={handleRegistrarLocalizacao}
                           name="andar"
                           placeholder="10"
                           required
-                        />
+                        >
+                          <option></option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                        </Input>
                       </FormGroup>
                       <FormGroup className="col-md-4">
                         <Label>Nº Apartamento</Label>
                         <Input
-                          type="text"
+                          type="number"
                           onChange={handleRegistrarLocalizacao}
                           name="unidade"
-                          placeholder="315"
                           required
                         />
                       </FormGroup>
