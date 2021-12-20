@@ -27,6 +27,14 @@ export const getUsuarios = async () => {
   }
 };
 
+export const updateUsuarios = async (usuario) => {
+  try {
+    await apiService.put("/pessoa/atualizar", usuario);
+  } catch (e) {
+    throw new Error("UpdateUsuariosService error: ", e);
+  }
+};
+
 export const listaPerfis = async () => {
   try {
     const { data } = await apiService.get("/perfil/lista");
