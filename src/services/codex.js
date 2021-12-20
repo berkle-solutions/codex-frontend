@@ -18,6 +18,15 @@ export const createUser = async (newUser) => {
   }
 };
 
+export const getUsuarios = async () => {
+  try {
+    const { data } = await apiService.get("/pessoa/lista");
+    return data;
+  } catch (e) {
+    throw new Error("UsuariosService error: ", e);
+  }
+};
+
 export const getEncomendas = async () => {
   try {
     const { data } = await apiService.get("/encomenda/lista");

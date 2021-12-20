@@ -5,7 +5,7 @@ import Encomenda from "views/PrivateViews/Encomenda";
 import EncomendaDetalhe from "views/PrivateViews/EncomendaDetalhe";
 import Triagem from "views/PrivateViews/Triagem";
 import Resgate from "views/PrivateViews/Resgate";
-// import Pessoas from "views/PrivateViews/Pessoas";
+import Pessoas from "views/PrivateViews/Pessoas";
 
 import { userRoutesAccess } from "./variables/enums";
 
@@ -66,14 +66,14 @@ const allRoutes = {
     layout: "/admin",
     show: false,
   },
-  // pessoas: {
-  //   path: "/pessoas",
-  //   name: "Lista de Usuários",
-  //   icon: "nc-icon nc-tile-56",
-  //   component: Pessoas,
-  //   layout: "/admin",
-  //   show: true,
-  // }
+  pessoas: {
+    path: "/pessoas",
+    name: "Lista de Usuários",
+    icon: "nc-icon nc-tile-56",
+    component: Pessoas,
+    layout: "/admin",
+    show: true,
+  },
 };
 
 const routes = (userRole) => [
