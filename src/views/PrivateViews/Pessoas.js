@@ -39,9 +39,6 @@ function Triagem() {
         <Row>
           <Col md="12">
             <Card>
-              <CardHeader>
-                <CardTitle tag="h4">Listagem de Encomendas</CardTitle>
-              </CardHeader>
               <CardBody>
                 <Table responsive>
                   <thead className="text-primary">
