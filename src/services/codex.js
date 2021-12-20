@@ -27,6 +27,24 @@ export const getUsuarios = async () => {
   }
 };
 
+export const listaPerfis = async () => {
+  try {
+    const { data } = await apiService.get("/perfil/lista");
+    return data;
+  } catch (e) {
+    throw new Error("PerfisService error: ", e);
+  }
+};
+
+export const getUsuario = async (pessoaId) => {
+  try {
+    const { data } = await apiService.get(`/pessoa/detalhe/${pessoaId}`);
+    return data;
+  } catch (e) {
+    throw new Error("UsuarioService error: ", e);
+  }
+};
+
 export const getEncomendas = async () => {
   try {
     const { data } = await apiService.get("/encomenda/lista");

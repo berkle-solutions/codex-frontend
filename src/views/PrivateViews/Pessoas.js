@@ -12,13 +12,6 @@ import {
 import { getUsuarios } from "../../services/codex";
 import { useHistory } from "react-router-dom";
 
-const STATUS_FILA_TYPES = {
-  Triagem: "yellow",
-  "Em Estoque": "orange",
-  Retirado: "green",
-  "Em Atraso": "red",
-};
-
 function Triagem() {
   const [usuarios, setUsuarios] = useState([]);
   const history = useHistory();
@@ -36,8 +29,8 @@ function Triagem() {
     }
   };
 
-  const goToEncomendaDetail = (id) => {
-    history.push(`/admin/encomenda/detalhe/${id}`);
+  const goToPessoaDetalhe = (id) => {
+    history.push(`/admin/pessoas/detalhe/${id}`);
   };
 
   return (
@@ -70,7 +63,7 @@ function Triagem() {
                         <td className="text-right">
                           <Button
                             color="primary"
-                            // onClick={() => goToEncomendaDetail(encomenda?.id)}
+                            onClick={() => goToPessoaDetalhe(usuario?.id)}
                           >
                             Ver mais
                           </Button>

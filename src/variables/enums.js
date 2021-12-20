@@ -13,6 +13,7 @@ export const userRoutesAccess = {
     "resgate",
     "triagem",
     "pessoas",
+    "pessoas_detalhe",
   ],
   [userTypes.PORTEIRO]: [
     "dashboard",
